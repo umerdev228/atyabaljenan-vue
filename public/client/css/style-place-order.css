@@ -1,0 +1,82 @@
+
+.steppers{
+    position: sticky;
+    top: 48px;
+    z-index: 3000;
+    background-color: #ffffff;
+    display: flex;
+    height: 2px;
+    padding: 0 0 0 30px;
+}
+
+.steppers .stepper0{
+    flex: 1;
+    background-color: rgba(255,82,54,1);
+    margin: 0 2px 0 0;
+    height: 2px;
+    width: 130px;
+    transition: background-color 250ms ease;
+}
+
+.steppers .stepper1{
+    flex: 1;
+    background-color: hsl(0,0%,86%);
+    margin: 0 2px;
+    height: 2px;
+    width: 130px;
+    transition: background-color 250ms ease;
+}
+
+.product-price {
+    margin-top: 8px;
+    margin-bottom: 0px;
+}
+
+.product-price span.price1{
+    color: black;
+}
+
+.item-quantity{
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.33;
+    letter-spacing: -0.2px;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+    color: #000000;
+    margin-right: 2px !important;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+li.delivery-time a i.clock {
+    float: left;
+    margin-right: 6px;
+    font-size: 24px;
+    margin-top: -6px;
+}
+
+span.delivery-address{
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    line-height: 1.23 !important;
+    display: block;
+    letter-spacing: -0.1px !important;
+    color: hsl(0,0%,38%) !important;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+i.arrow {
+    position: absolute;
+    top: 26px;
+    right: 15px;
+}
+
+.order-btn a span.item-content{
+    color: black;
+}
+
+.order-btn a:hover span.item-content{
+    text-decoration: none;
+}

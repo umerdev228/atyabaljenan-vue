@@ -1,0 +1,117 @@
+.card-shine{
+    width: 100%;
+    border: 2px solid #f6f7f8;
+    background-color: #fbfbfb;
+    margin-bottom: 25px;
+}
+
+.card-shine .body-shine{
+    padding: 1rem 1.25rem;
+    position: relative;
+}
+
+.body-shine .shine  {
+    background: #f6f7f8;
+    background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+    background-repeat: no-repeat;
+    background-size: 800px 104px; 
+    display: inline-block;
+    position: relative;
+    margin-left: 5px;
+    animation-duration: 1s;
+    animation-fill-mode: forwards; 
+    animation-iteration-count: infinite;
+    animation-name: placeholderShimmer;
+    animation-timing-function: linear;
+}
+  
+  box {
+    height: 104px;
+    width: 100px;
+}
+
+ .body-shine div {
+    display: inline-flex;
+    flex-direction: column; 
+    margin-left: 0px;
+    margin-top: 15px;
+    vertical-align: top; 
+  }
+  
+  lines {
+    height: 10px;
+    margin-top: 10px;
+    width: 155px;
+  }
+  
+  .shine.shine1{
+      width:240px
+  }
+  
+  .shine.shine2{
+      width: 240px;
+  }
+
+  
+  .shine.shines{
+    width: 105px;
+    height: 27px;
+    border-radius: 7px;
+  }
+  
+  .shine-rating {
+    position: absolute;
+    top: 36%;
+    right: 13%;
+}
+  
+  .shine-sep{
+    height: 2px;
+    border-bottom: 3px solid #EBEDF3 !important;
+    width: 100%;
+}
+  
+  .body-shine .ftn{
+    margin-left: 55px;
+    position: relative;
+  }
+  
+  .shine.shine-ftn {
+    width: 130px;
+}
+  
+  .shine.shine-rew{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+  
+  .shine.shine-rew.rew-2 {
+    position: absolute;
+    left: 24px;
+}
+  
+  .shine.shine-rew.rew-3 {
+    position: absolute;
+    left: 47px;
+}
+  
+  .shine.shine-rew.rew-4{
+    position: absolute;
+    left: 71px;
+}
+  
+  .shine.shine-rew.rew-5{
+    position: absolute;
+    left: 95px;
+}
+  
+  @keyframes placeholderShimmer {
+    0% {
+      background-position: -468px 0;
+    }
+    
+    100% {
+      background-position: 468px 0; 
+    }
+  }

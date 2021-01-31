@@ -1,0 +1,164 @@
+.product-review{
+    height: 643px;
+    background-color: #ffffff;
+}
+
+.steppers{
+    position: sticky;
+    top: 48px;
+    z-index: 3000;
+    background-color: #ffffff;
+    display: flex;
+    height: 2px;
+    padding: 0 0 0 15px;
+    overflow: hidden;
+}
+
+.steppers .stepper0{
+    flex: 1;
+    background-color: rgba(255,82,54,1);
+    margin: 0 2px 0 0;
+    height: 2px;
+    width: 100px;
+    transition: background-color 250ms ease;
+}
+
+.steppers .stepper1{
+    flex: 1;
+    background-color: hsl(0,0%,86%);
+    margin: 0 2px;
+    height: 2px;
+    width: 122px;
+    transition: background-color 250ms ease;
+}
+
+.iti__flag-container:focus,
+.iti__selected-flag:focus{
+    outline: none;
+}
+
+.order-contact{
+    flex-direction: column;
+    padding: 16px 0px 16px 13px;
+    margin-top: 0;
+    height: auto;
+    display: flex;
+    background-color: #ffffff;
+}
+
+.order-contact h1{
+    font-size: 22px;
+    line-height: 1.27;
+    letter-spacing: 0.3px;
+    padding-bottom: 8px;
+    padding-left: 13px;
+    color: #000000;
+    word-wrap: break-word;
+    word-break: break-word;
+    font-weight: 600;
+}
+
+.order-contact p{
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.33;
+    letter-spacing: -0.2px;
+    padding-bottom: 16px;
+    padding-left: 13px;
+    color: hsl(0,0%,38%);
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.contact-row{
+    width: 100%;
+    margin: 0;
+    padding: 0px 17px 0 13px;
+}
+
+input.additional-info,
+input.additional-info1,
+input.additional-info2,
+input.additional-info3,
+input.additional-info4,
+input.additional-info5,
+input.additional-info6
+{
+    background: none;
+    resize: none;
+    padding-top: 4px;
+    padding-bottom: 8px;
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid;
+    border-color: hsl(0,0%,96%);
+    color: #000000;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.33;
+    letter-spacing: -0.2px;
+}
+
+input.additional-info:not(:placeholder-shown) + label.add-instruction,
+input.additional-info1:not(:placeholder-shown) + label.add-instruction1,
+input.additional-info2:not(:placeholder-shown) + label.add-instruction2,
+input.additional-info3:not(:placeholder-shown) + label.add-instruction3,
+input.additional-info4:not(:placeholder-shown) + label.add-instruction4,
+input.additional-info5:not(:placeholder-shown) + label.add-instruction5,
+input.additional-info6:not(:placeholder-shown) + label.add-instruction6
+{
+    transform: translate3d(0px,-44px,0px);
+    transform-origin: left top;
+    font-size: 12px;
+}
+
+input.additional-info:focus + label.add-instruction,
+input.additional-info1:focus + label.add-instruction1,
+input.additional-info2:focus + label.add-instruction2,
+input.additional-info3:focus + label.add-instruction3,
+input.additional-info4:focus + label.add-instruction4,
+input.additional-info5:focus + label.add-instruction5,
+input.additional-info6:focus + label.add-instruction6
+{
+    transform: translate3d(0px,-44px,0px);
+    transform-origin: left top;
+    font-size: 12px;
+}
+
+label.add-instruction,
+label.add-instruction1,
+label.add-instruction2,
+label.add-instruction3,
+label.add-instruction4,
+label.add-instruction5,
+label.add-instruction6
+{
+    position: absolute;
+    color: hsl(0,0%,60%);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.33;
+    letter-spacing: -0.2px;
+    pointer-events: none;
+    transition: 300ms ease all;
+    transform: translate3d(0px,-32px,0px);
+    transform-origin: left top;
+}
+
+.btn-next .order-btn a{
+    color: black;
+}
+
+.btn-next .order-btn a:hover{
+    color: black;
+    text-decoration: none;
+}
+
+.iti.iti--allow-dropdown{
+    width: 100%;
+}
+
+

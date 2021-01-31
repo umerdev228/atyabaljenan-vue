@@ -1,0 +1,92 @@
+.product-review{
+    background-color: transparent;
+}
+
+
+.product-oder-btn.btn-next {
+    margin-top: 160px;
+}
+
+.steppers {
+    height: 4px;
+    padding: 0 30px 0 35px;
+}
+
+.steppers .stepper0,
+.steppers .stepper1{
+    height: 4px;
+}
+
+p.order-progress{
+    padding: 10px 0 7px 23px;
+    margin: 0;
+    background-color: white;
+}
+
+
+h2.stepper-header{
+    font-size: 22px;
+    width: 100%;
+    padding: 0 20px 10px;
+    margin: 0;
+    background-color: white;
+}
+
+h2.stepper-header span{
+    float: right;
+    font-size: 14px;
+    margin: 5px 4px 0 0;
+}
+
+.order-payment {
+    text-align: left;
+    margin-top: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: auto;
+}
+
+ul.delivery-review h3{
+    padding-top: 0 !important;
+}
+
+ul.delivery-review li.delivery-time{
+    padding-bottom: 0;
+}
+
+.product-price {
+    margin-top: -5px;
+    margin-bottom: 0px;
+}
+
+.product-price span.price2{
+    font-weight: 500;
+}
+
+.order-contact p {
+    line-height: 1.9;
+}
+
+a.help-company{
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.33;
+    letter-spacing: -0.2px;
+    text-align: center;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    display: inline;
+    cursor: pointer;
+    appearance: none;
+    touch-action: manipulation;
+    color: rgb(255, 60, 28);
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    background: transparent;
+    text-decoration: none;
+    transition: all 0.2s ease-in 0s;
+    padding: 8px;
+    margin-bottom: 10px;
+}
