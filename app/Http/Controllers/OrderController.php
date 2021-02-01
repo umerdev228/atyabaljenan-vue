@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Area;
+use App\Customer;
 use App\Order;
 use App\OrderProduct;
 use App\OrderStatus;
@@ -112,6 +114,55 @@ class OrderController extends Controller
                 }
                 return '';
             })->rawColumns(['status','action'])->make(true);
+    }
+
+    public function checkout() {
+        $id = !empty($_GET['id']) ? $_GET['id'] : '';
+
+
+        $booking = Order::where('id', $id)->first();
+        $area = Area::where('id', $booking->area_id)->first();
+        $user = Customer::where('id', $booking->customer_id)->first();
+
+        $details['title'] = 'Appointment Booking';
+        $details['name'] = $user->name;
+        $details['body'] = "Your appointment has been booked";
+        $details['time'] = $booking->time;
+        $details['date'] = $booking->date;
+        $details['payment_gateway'] = $booking->payment_gateway;
+
+        if ($booking->payment_gateway == 'cash') {
+            return redirect()->route('home');
+        }
+        else {
+//            $mid = 'mer2000032';
+//            $secret_key = '6743048';
+            $mid = 'mer20000543';
+            $secret_key = '3750331';
+            $txTime = $user->id;
+            $txRefNo = time();
+            $amt = $booking->total + (float)$area->delivery_charges;
+            $crossCat = "GEN";
+            $furl = url('/update-order');
+            $surl =  route('home');
+            $hstring = $mid . "|" .  $txRefNo . "|" .  $surl . "|" . $furl . "|" . $amt . "|" . $txTime . "|" . $crossCat . "|" . $secret_key;
+            $sig = hash('sha512', $hstring);
+
+
+
+        return view('payment.index', compact(
+            'booking',
+            'user',
+            'mid',
+            'hstring',
+            'sig',
+            'txRefNo',
+            'amt',
+            'crossCat',
+            'surl',
+            'furl'
+        ));
+        }
     }
 
 }

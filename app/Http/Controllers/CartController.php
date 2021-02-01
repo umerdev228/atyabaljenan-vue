@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
+use App\Order;
+use App\OrderAddon;
+use App\OrderProduct;
+use App\OrderProductVariant;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Cart;
 use PhpParser\Node\Expr\Array_;
+use function Matrix\add;
 
 class CartController extends Controller
 {
@@ -119,5 +125,77 @@ class CartController extends Controller
         dd($totalPrice, $cartTotalQuantity);
     }
 
+    public function remove(Request $request) {
+        Cart::remove($request->product);
+
+        $content = Cart::getContent();
+        $totalPrice = Cart::getTotal();
+        $cartTotalQuantity = Cart::getTotalQuantity();
+
+        return response()->json([
+            'type' => 'success',
+            'cart' => $content,
+            'totalPrice' => $totalPrice,
+            'quantity' => $cartTotalQuantity,
+        ]);
+    }
+
+
+    public function createOrder(Request $request) {
+        
+        $trxid = time();
+        $totalPrice = Cart::getTotal();
+        $customer = Customer::where('phone', $request['mobile'])->first();
+        if (!$customer) {
+            $customer = Customer::create([
+                'name' => $request['name'],
+                'phone' => $request['phone'],
+                'email' => $request['email'],
+            ]);
+        }
+
+        $order = Order::create([
+            'customer_id' => $customer['id'],
+            'government_id' => $request['area']['government_id'],
+            'area_id' => $request['area']['id'],
+            'delivery_charges' => $request['area']['delivery_charges'],
+            'total' => $totalPrice,
+            'trx_id' => $trxid,
+        ]);
+
+        foreach (Cart::getContent() as $content) {
+            $order_item = OrderProduct::create([
+                'order_id' => $order->id,
+                'item_id' => $content->id,
+                'qty' => $content->quantity,
+                'total' => $content->price,
+                'note' => $content->attributes->instruction,
+            ]);
+            if ($content->attributes->addons){
+                foreach ($content->attributes->addons as $addon) {
+                    OrderAddon::create([
+                        'order_id' => $order->id,
+                        'order_item_id' => $order_item->id,
+                        'product_id' => $content->id,
+                        'addon_id' => $addon['id'],
+                    ]);
+                }
+            }
+            if ($content->attributes->variants){
+                foreach ($content->attributes->variants as $variant) {
+                    OrderProductVariant::create([
+                        'order_id' => $order->id,
+                        'product_id' => $content->id,
+                        'variant_id' => $variant['id'],
+                        'variant_head_id' => $variant['variant_head_id'],
+                    ]);
+                }
+            }
+        }
+        return response()->json([
+            'order_id' => $order->id,
+            'type' => 'success'
+        ]);
+    }
 
 }

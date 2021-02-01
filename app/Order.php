@@ -8,6 +8,7 @@ class Order extends Model
 {
     //
 
+    protected $guarded = [];
 
     public function products(){
         return $this->hasMany(OrderProduct::class,'order_id')->with('products');

@@ -257,10 +257,6 @@ export default {
         })
     },
     addToCart() {
-      if (localStorage.cart) {
-        let oldCart = JSON.parse(localStorage.cart)
-        console.log(oldCart)
-      }
       let self = this
       let totalPrice = 0.00
       totalPrice += parseInt(self.product.price)

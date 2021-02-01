@@ -10,12 +10,14 @@
               </svg>
             </span>
             <span class="MuiTouchRipple-root"></span>
-          </button><div class="row" style="position: absolute; width: 100%; left: 15px; top: 0px; display: inline-block; line-height: 3.2;">
-          <div class="col text-center"><p style="font-weight: 600; font-size: 17px; max-width: 187px; margin-left: auto; margin-right: auto; max-height: 54px; line-height: 3; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-            HANDEMADE CLAY POTS
-          </p>
+          </button>
+          <div class="row" style="position: absolute; width: 100%; left: 15px; top: 0px; display: inline-block; line-height: 3.2;">
+            <div class="col text-center">
+              <p style="font-weight: 600; font-size: 17px; max-width: 187px; margin-left: auto; margin-right: auto; max-height: 54px; line-height: 3; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                {{ category.category }}
+              </p>
+            </div>
           </div>
-        </div>
           <button class="MuiButtonBase-root MuiButton-root MuiButton-text back_arrow mt-1 languageMakeDisappearForLargeScreen" tabindex="0" type="button" style="float: right; height: 50px; margin-right: 10px; margin-left: 0px; font-size: 20px; padding-bottom: 15px; color: black; display: inline; z-index: 22;">
             <span class="MuiButton-label">ع</span>
             <span class="MuiTouchRipple-root"></span>
@@ -63,7 +65,7 @@
                 Price on selection
               </p>
                 <div class="mt-2  float-right">
-                  <button class="MuiButtonBase-root MuiButton-root MuiButton-outlined mx-auto MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall MuiButton-disableElevation" tabindex="0" type="button" style="height: 30px; width: 80px; font-weight: bold; border: 1px solid; text-transform: none; font-size: 14px;">
+                  <button v-on:click="addToCart(product)" class="MuiButtonBase-root MuiButton-root MuiButton-outlined mx-auto MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall MuiButton-disableElevation" tabindex="0" type="button" style="height: 30px; width: 80px; font-weight: bold; border: 1px solid; text-transform: none; font-size: 14px;">
                     <span class="MuiButton-label">
                       <span class="MuiButton-startIcon MuiButton-iconSizeSmall">
                         <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
@@ -102,11 +104,17 @@
 </template>
 
 <script>
+import Vue from "vue";
+
 export default {
   name: "detailComponent",
   data() {
     return {
       products: [],
+      category: '',
+      selectedVariants: '',
+      instruction: '',
+      quantity: '',
     }
   },
   created() {},
@@ -125,14 +133,58 @@ export default {
         .then(response => {
           if (response.data.type === 'success') {
             self.products = response.data.products
-            console.log(response.data.products)
+            self.category = response.data.category
+
             self.$parent.loading = false
           }
         })
         .catch(e => {
           this.errors.push(e)
         })
-    }
+    },
+    addToCart(product) {
+      let self = this
+      let totalPrice = 0.00
+      totalPrice += parseInt(self.product.price)
+
+      if (this.$parent.selectedArea === null) {
+        this.$router.push('/areas')
+        Vue.toasted.error('Choose Area To Deliver First');
+        return
+      }
+      if (this.product.manage_stock) {
+        if (this.product.stock < this.quantity) {
+          Vue.toasted.error('Out of stock');
+        }
+        else {
+          this.storeCart(product)
+        }
+      }
+      else {
+        this.storeCart(product)
+      }
+
+    },
+    storeCart(product) {
+      let self = this
+      axios.post(APP_URL+'/store-cart', {
+        'product': product,
+        'addons': self.selectedAddons,
+        'variants': self.selectedVariants,
+        'instruction': self.instruction,
+        'quantity': self.quantity,
+      })
+          .then(response => {
+            if (response.data.type === 'success') {
+              self.$parent.price = response.data.totalPrice
+              self.getCartItems()
+            }
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+
+    },
   },
 }
 </script>

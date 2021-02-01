@@ -18,7 +18,7 @@ Session::updateCurrent();
 
 Route::get('/', function () {
     return view('frontend.layout.home');
-});
+})->name('home');
 
 Route::get('active/users', function (Illuminate\Http\Request $request) {
     $limit = 10;
@@ -195,3 +195,6 @@ Route::get('home', function (){
 Route::post('store-cart', 'CartController@store')->name('cart.store');
 Route::post('get-store-cart', 'CartController@getCart')->name('get.cart');
 Route::get('get-all-cart', 'CartController@getAllCart')->name('get.all.cart');
+Route::post('remove-cart', 'CartController@remove')->name('remove.cart');
+Route::post('createOrder', 'CartController@createOrder')->name('create.order');
+Route::get('/payment', 'OrderController@checkout');

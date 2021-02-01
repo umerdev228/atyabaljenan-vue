@@ -2188,6 +2188,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2291,11 +2293,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "detailComponent",
   data: function data() {
     return {
-      products: []
+      products: [],
+      category: '',
+      selectedVariants: '',
+      instruction: '',
+      quantity: ''
     };
   },
   created: function created() {},
@@ -2315,11 +2324,51 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         if (response.data.type === 'success') {
           self.products = response.data.products;
-          console.log(response.data.products);
+          self.category = response.data.category;
           self.$parent.loading = false;
         }
       })["catch"](function (e) {
         _this.errors.push(e);
+      });
+    },
+    addToCart: function addToCart(product) {
+      var self = this;
+      var totalPrice = 0.00;
+      totalPrice += parseInt(self.product.price);
+
+      if (this.$parent.selectedArea === null) {
+        this.$router.push('/areas');
+        vue__WEBPACK_IMPORTED_MODULE_0___default.a.toasted.error('Choose Area To Deliver First');
+        return;
+      }
+
+      if (this.product.manage_stock) {
+        if (this.product.stock < this.quantity) {
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.toasted.error('Out of stock');
+        } else {
+          this.storeCart(product);
+        }
+      } else {
+        this.storeCart(product);
+      }
+    },
+    storeCart: function storeCart(product) {
+      var _this2 = this;
+
+      var self = this;
+      axios.post(APP_URL + '/store-cart', {
+        'product': product,
+        'addons': self.selectedAddons,
+        'variants': self.selectedVariants,
+        'instruction': self.instruction,
+        'quantity': self.quantity
+      }).then(function (response) {
+        if (response.data.type === 'success') {
+          self.$parent.price = response.data.totalPrice;
+          self.getCartItems();
+        }
+      })["catch"](function (e) {
+        _this2.errors.push(e);
       });
     }
   }
@@ -2463,122 +2512,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "contactInfoComponent",
   data: function data() {
@@ -2586,30 +2519,40 @@ __webpack_require__.r(__webpack_exports__);
       name: '',
       phone: '',
       email: '',
-      resultsExample: null
+      address: '',
+      payment_type: '',
+      result: null
     };
   },
   created: function created() {},
   methods: {
-    createCustomer: function createCustomer() {
+    createOrder: function createOrder() {
       var _this = this;
 
       var self = this;
       var name = this.name;
-      var phone = this.resultsExample;
+      var address = this.address;
+      var phone = this.result;
       var email = this.email;
-      axios.post(APP_URL + '/api/createCustomer', {
+      var payment_type = this.payment_type;
+      axios.post(APP_URL + '/createOrder', {
         'name': name,
         'phone': phone,
-        'email': email
+        'email': email,
+        'address': address,
+        'payment_type': payment_type,
+        'area': self.$parent.selectedArea
       }).then(function (response) {
         if (response.data.type === 'success') {
           console.log(response.data);
-          self.$router.push('/delivery/info');
+          window.location = "/payment?id=" + response.data.order_id;
         }
       })["catch"](function (e) {
         _this.errors.push(e);
       });
+    },
+    paymentType: function paymentType(type) {
+      this.payment_type = type;
     }
   }
 });
@@ -3470,18 +3413,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "reviewOrderComponent",
@@ -3513,6 +3444,22 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (e) {
         _this.errors.push(e);
+      });
+    },
+    removeCart: function removeCart(product) {
+      var _this2 = this;
+
+      var self = this;
+      axios.post(APP_URL + '/remove-cart', {
+        'product': product.id
+      }).then(function (response) {
+        console.log(response.data);
+
+        if (response.data.type === 'success') {
+          self.cart = response.data.cart;
+        }
+      })["catch"](function (e) {
+        _this2.errors.push(e);
       });
     }
   }
@@ -3788,11 +3735,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     addToCart: function addToCart() {
-      if (localStorage.cart) {
-        var oldCart = JSON.parse(localStorage.cart);
-        console.log(oldCart);
-      }
-
       var self = this;
       var totalPrice = 0.00;
       totalPrice += parseInt(self.product.price);
@@ -41013,9 +40955,51 @@ var render = function() {
                     _c("span", { staticClass: "MuiTouchRipple-root" })
                   ]
                 ),
-                _vm._m(0),
                 _vm._v(" "),
-                _vm._m(1),
+                _c(
+                  "div",
+                  {
+                    staticClass: "row",
+                    staticStyle: {
+                      position: "absolute",
+                      width: "100%",
+                      left: "15px",
+                      top: "0px",
+                      display: "inline-block",
+                      "line-height": "3.2"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "col text-center" }, [
+                      _c(
+                        "p",
+                        {
+                          staticStyle: {
+                            "font-weight": "600",
+                            "font-size": "17px",
+                            "max-width": "187px",
+                            "margin-left": "auto",
+                            "margin-right": "auto",
+                            "max-height": "54px",
+                            "line-height": "3",
+                            overflow: "hidden",
+                            "white-space": "nowrap",
+                            "text-overflow": "ellipsis"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(_vm.category.category) +
+                              "\n              "
+                          )
+                        ]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(0),
                 _vm._v(" "),
                 _c(
                   "button",
@@ -41196,7 +41180,12 @@ var render = function() {
                                       "text-transform": "none",
                                       "font-size": "14px"
                                     },
-                                    attrs: { tabindex: "0", type: "button" }
+                                    attrs: { tabindex: "0", type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.addToCart(product)
+                                      }
+                                    }
                                   },
                                   [
                                     _c(
@@ -41354,47 +41343,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "div",
-      {
-        staticClass: "row",
-        staticStyle: {
-          position: "absolute",
-          width: "100%",
-          left: "15px",
-          top: "0px",
-          display: "inline-block",
-          "line-height": "3.2"
-        }
-      },
-      [
-        _c("div", { staticClass: "col text-center" }, [
-          _c(
-            "p",
-            {
-              staticStyle: {
-                "font-weight": "600",
-                "font-size": "17px",
-                "max-width": "187px",
-                "margin-left": "auto",
-                "margin-right": "auto",
-                "max-height": "54px",
-                "line-height": "3",
-                overflow: "hidden",
-                "white-space": "nowrap",
-                "text-overflow": "ellipsis"
-              }
-            },
-            [_vm._v("\n            HANDEMADE CLAY POTS\n          ")]
-          )
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
       "button",
       {
         staticClass:
@@ -41443,383 +41391,646 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "col-md-12 col-sm-12 col-12 ltr-product-details" },
+    {
+      staticClass: "col-lg-12 col-md-12 col-12 p-0 w-100 ",
+      staticStyle: {
+        overflow: "hidden scroll",
+        "background-color": "rgb(244, 245, 245)",
+        "min-height": "calc(100% - 60px)",
+        height: "calc(100% - 60px)"
+      }
+    },
     [
-      _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "p-0 h-100" }, [
         _c(
           "div",
           {
-            staticClass: "product-container-main",
-            staticStyle: { width: "100%" },
-            attrs: { id: "product-container" }
+            staticClass: "  w-100 mx-0 ",
+            staticStyle: {
+              "background-color": "white",
+              height: "769px",
+              "min-height": "690px"
+            }
           },
           [
-            _c("header", { staticClass: "review-header" }, [
-              _c("h1", [_vm._v("Checkout")]),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn-back",
-                  on: {
-                    click: function($event) {
-                      return _vm.$router.go(-1)
+            _c(
+              "div",
+              {
+                staticClass: "border-bottom  w-100 detail_header",
+                staticStyle: {
+                  top: "0px",
+                  "background-image": "none",
+                  "background-color": "white",
+                  "z-index": "1000"
+                }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "MuiButtonBase-root MuiButton-root MuiButton-text back_arrow mt-1",
+                    staticStyle: {
+                      float: "left",
+                      height: "50px",
+                      "max-width": "30px",
+                      "margin-left": "10px",
+                      "margin-right": "0px",
+                      display: "inline-block",
+                      "z-index": "22"
+                    },
+                    attrs: { tabindex: "0", type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.$router.go(-1)
+                      }
                     }
-                  }
-                },
-                [
-                  _c("a", [
-                    _c("i", [
+                  },
+                  [
+                    _c("span", { staticClass: "MuiButton-label" }, [
                       _c(
                         "svg",
                         {
+                          staticClass: "MuiSvgIcon-root",
                           attrs: {
-                            width: "1em",
-                            height: "1em",
-                            viewBox: "0 0 32 32"
+                            focusable: "false",
+                            viewBox: "0 0 24 24",
+                            "aria-hidden": "true"
                           }
                         },
                         [
                           _c("path", {
                             attrs: {
-                              fill: "currentColor",
-                              "fill-rule": "evenodd",
                               d:
-                                "M10.414 17l4.293 4.293a1 1 0 01-1.414 1.414l-6-6a1 1 0 010-1.414l6-6a1 1 0 111.414 1.414L10.414 15H24a1 1 0 010 2H10.414z"
+                                "M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
                             }
                           })
                         ]
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "container-fluid" }, [
-              _c("div", { staticClass: "row" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 order-contact"
-                  },
-                  [
-                    _c("h1", [_vm._v("Contact Information")]),
-                    _vm._v(" "),
-                    _c("p", [
-                      _vm._v(
-                        "We’ll use it to get back to you for order updates"
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "row contact-row" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.name,
-                                expression: "name"
-                              }
-                            ],
-                            staticClass: "additional-info",
-                            attrs: {
-                              type: "text",
-                              placeholder: "Enter Name",
-                              required: "",
-                              name: "name",
-                              id: "name"
-                            },
-                            domProps: { value: _vm.name },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.name = $event.target.value
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "add-instruction",
-                              attrs: { for: "name" }
-                            },
-                            [_vm._v("Name")]
-                          )
-                        ]
-                      ),
+                    _c("span", { staticClass: "MuiTouchRipple-root" })
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(0)
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "border-top w-100",
+                staticStyle: {
+                  "margin-top": "55px",
+                  "background-color": "white"
+                }
+              },
+              [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "svg",
+                  {
+                    staticStyle: { "margin-top": "98px" },
+                    attrs: {
+                      height: "100",
+                      viewBox: "0 -20 440.4 440",
+                      width: "100"
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "m440.398438 90.199219v290.859375c.003906 11.046875-8.953126 20.003906-20 20h-400.398438c-11.046875.003906-20.00390625-8.953125-20-20v-290.859375zm0 0",
+                        fill: "#00efd1"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "m440.398438 20.199219v70h-440.398438v-70c-.00390625-11.046875 8.953125-20.003907 20-20h400.398438c11.046874-.003907 20.003906 8.953125 20 20zm0 0",
+                        fill: "#00acea"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d: "m390.199219 29.171875h30v30h-30zm0 0",
+                        fill: "#fedb41"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d: "m338.199219 29.171875h30v30h-30zm0 0",
+                        fill: "#fedb41"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d: "m20.199219 29.171875h290v30h-290zm0 0",
+                        fill: "#fedb41"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "m169.410156 253.28125c9.964844 0 19.464844 4.21875 26.144532 11.613281 6.683593 7.394531 9.921874 17.269531 8.914062 27.183594v56.480469h-149.570312v-56.480469c-1.003907-9.914063 2.234374-19.792969 8.917968-27.1875s16.1875-11.613281 26.152344-11.609375h26.890625v.039062l4.78125 19.660157h-.519531l-7.019532 44.550781v.007812l15.589844 15 16.578125-15-8.070312-44.550781-16.558594-.007812h16.089844l4.789062-19.660157v-.039062zm0 0",
+                        fill: "#00acea"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "m162.429688 178.28125v26.207031c0 18.742188-15.191407 33.933594-33.929688 33.933594s-33.929688-15.191406-33.929688-33.933594v-25.648437c13.441407 2.238281 22.269532-4.589844 27.628907-12.410156h.011719c7.097656 10.410156 19.757812 20.628906 40.21875 11.851562zm0 0",
+                        fill: "#f7caa5"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "m162.429688 170.699219v7.582031c-20.460938 8.777344-33.121094-1.441406-40.21875-11.851562-3.273438-4.84375-5.816407-10.144532-7.539063-15.730469h27.757813c11.042968.003906 19.996093 8.957031 20 20zm0 0",
+                        fill: "#4b5d63"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "m138.199219 272.988281 8.070312 44.550781-16.578125 15-15.589844-15v-.007812l7.019532-44.550781h.519531zm0 0",
+                        fill: "#fedb41"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "m142.519531 253.28125v.039062l-4.789062 19.660157h-16.089844l-4.78125-19.660157v-.039062zm0 0",
+                        fill: "#fedb41"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "m122.210938 166.429688h-.011719c-5.359375 7.820312-14.1875 14.648437-27.628907 12.410156v-8.140625c.003907-11.042969 8.957032-19.996094 20-20h.101563c1.722656 5.585937 4.265625 10.886719 7.539063 15.730469zm0 0",
+                        fill: "#4b5d63"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("g", { attrs: { fill: "#fedb41" } }, [
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "m243.199219 195.628906h82c3.316406 0 6-2.683594 6-6 0-3.3125-2.683594-6-6-6h-82c-3.3125 0-6 2.6875-6 6 0 3.316406 2.6875 6 6 6zm0 0"
+                        }
+                      }),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-                        },
-                        [
-                          _c("vue-phone-number-input", {
-                            attrs: {
-                              "show-code-on-list": "",
-                              "default-country-code": "KW",
-                              "preferred-countries": ["KW"],
-                              size: "lg"
-                            },
-                            on: {
-                              update: function($event) {
-                                _vm.resultsExample = $event
-                              }
-                            },
-                            model: {
-                              value: _vm.phone,
-                              callback: function($$v) {
-                                _vm.phone = $$v
-                              },
-                              expression: "phone"
-                            }
-                          })
-                        ],
-                        1
-                      ),
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "m243.199219 225.628906h142c3.316406 0 6-2.683594 6-6 0-3.3125-2.683594-6-6-6h-142c-3.3125 0-6 2.6875-6 6 0 3.316406 2.6875 6 6 6zm0 0"
+                        }
+                      }),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-                        },
-                        [
-                          _c("input", {
-                            staticClass: "additional-info1",
-                            attrs: {
-                              type: "text",
-                              placeholder: "Enter Email",
-                              required: "",
-                              name: "email",
-                              id: "email"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "add-instruction1",
-                              attrs: { for: "email" },
-                              model: {
-                                value: _vm.email,
-                                callback: function($$v) {
-                                  _vm.email = $$v
-                                },
-                                expression: "email"
-                              }
-                            },
-                            [_vm._v("E-mail (Optional)")]
-                          )
-                        ]
-                      )
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "m385.199219 243.628906h-142c-3.3125 0-6 2.6875-6 6 0 3.316406 2.6875 6 6 6h142c3.316406 0 6-2.683594 6-6 0-3.3125-2.683594-6-6-6zm0 0"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "m385.199219 273.628906h-142c-3.3125 0-6 2.6875-6 6 0 3.316406 2.6875 6 6 6h142c3.316406 0 6-2.683594 6-6 0-3.3125-2.683594-6-6-6zm0 0"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "m385.199219 303.628906h-142c-3.3125 0-6 2.6875-6 6 0 3.316406 2.6875 6 6 6h142c3.316406 0 6-2.683594 6-6 0-3.3125-2.683594-6-6-6zm0 0"
+                        }
+                      })
                     ])
                   ]
                 ),
                 _vm._v(" "),
                 _c(
-                  "div",
+                  "p",
                   {
-                    staticClass:
-                      "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 products-order-address",
-                    staticStyle: { "min-height": "400px !important" }
+                    staticClass: "text-muted mt-3 mb-0",
+                    staticStyle: { "font-size": "22px" }
+                  },
+                  [_vm._v("\n            Contact Information\n          ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  {
+                    staticClass: "mx-auto w-75",
+                    staticStyle: {
+                      "font-size": "15px",
+                      color: "rgb(194, 194, 194)"
+                    }
                   },
                   [
-                    _c("nav", [
-                      _c("label", { staticClass: "nav_title" }, [
-                        _vm._v("Choose Unit Type")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "nav nav-tabs",
-                          attrs: { id: "nav-tab", role: "tablist" }
-                        },
-                        [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "nav-item nav-link  type-link",
+                    _vm._v(
+                      "\n            We need this information to contact you and get the order delivered\n          "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "w-100 px-4" }, [
+                  _c("form", [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "MuiFormControl-root MuiTextField-root my-4 MuiFormControl-fullWidth"
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
+                            attrs: {
+                              "data-shrink": "false",
+                              for: "name",
+                              id: "standard-basic-label",
+                              dir: "ltr"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                  Name *\n                "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl",
+                            attrs: { dir: "ltr" }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.name,
+                                  expression: "name"
+                                }
+                              ],
+                              staticClass: "MuiInputBase-input MuiInput-input",
                               attrs: {
-                                "data-type": "House",
-                                id: "nav-house-tab",
-                                "data-toggle": "tab",
-                                href: "#nav-home",
-                                role: "tab",
-                                "aria-controls": "nav-home",
-                                "aria-selected": "true"
+                                "aria-invalid": "false",
+                                id: "name",
+                                name: "name",
+                                type: "text",
+                                value: ""
+                              },
+                              domProps: { value: _vm.name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.name = $event.target.value
+                                }
                               }
-                            },
-                            [
-                              _c("i", [
-                                _c(
-                                  "svg",
-                                  {
-                                    attrs: {
-                                      width: "1em",
-                                      height: "1em",
-                                      viewBox: "0 0 35 35"
-                                    }
-                                  },
-                                  [
-                                    _c("path", {
-                                      attrs: {
-                                        fill: "none",
-                                        stroke: "currentColor",
-                                        "stroke-linecap": "round",
-                                        "stroke-linejoin": "round",
-                                        "stroke-width": "1.4",
-                                        d:
-                                          "M8 15.786v12.198C8 28.544 8.455 29 9.016 29H15v-7.115h5V29h5.984c.56 0 1.016-.455 1.016-1.016V15.786M4 17.82L16.302 5.315a1.016 1.016 0 011.422-.027L31 17.82"
-                                      }
-                                    })
-                                  ]
-                                )
-                              ]),
-                              _vm._v(
-                                "\n                    House\n                  "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "nav-item nav-link  type-link",
-                              attrs: {
-                                id: "nav-appartment-tab",
-                                "data-toggle": "tab",
-                                href: "#nav-profile",
-                                role: "tab",
-                                "aria-controls": "nav-profile",
-                                "aria-selected": "false"
-                              }
-                            },
-                            [
-                              _c("i", [
-                                _c(
-                                  "svg",
-                                  {
-                                    attrs: {
-                                      width: "1em",
-                                      height: "1em",
-                                      viewBox: "0 0 35 35"
-                                    }
-                                  },
-                                  [
-                                    _c("path", {
-                                      attrs: {
-                                        fill: "none",
-                                        stroke: "currentColor",
-                                        "stroke-linecap": "round",
-                                        "stroke-linejoin": "round",
-                                        "stroke-width": "1.4",
-                                        d:
-                                          "M5 29V6a1 1 0 011-1h23a1 1 0 011 1v23a1 1 0 01-1 1h-8v-8.333h-7V30H6a1 1 0 01-1-1zm6-18.5h1-1zm0 6h1-1zm6-6h1-1zm0 6h1-1zm6-6h1-1zm0 6h1-1z"
-                                      }
-                                    })
-                                  ]
-                                )
-                              ]),
-                              _vm._v(
-                                "\n                    Apartment\n                  "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "nav-item nav-link  type-link",
-                              attrs: {
-                                id: "nav-office-tab",
-                                "data-toggle": "tab",
-                                href: "#nav-contact",
-                                role: "tab",
-                                "aria-controls": "nav-contact",
-                                "aria-selected": "false"
-                              }
-                            },
-                            [
-                              _c("i", [
-                                _c(
-                                  "svg",
-                                  {
-                                    attrs: {
-                                      width: "1em",
-                                      height: "1em",
-                                      viewBox: "0 0 35 35"
-                                    }
-                                  },
-                                  [
-                                    _c("path", {
-                                      attrs: {
-                                        fill: "none",
-                                        stroke: "currentColor",
-                                        "stroke-linecap": "round",
-                                        "stroke-linejoin": "round",
-                                        "stroke-width": "1.4",
-                                        d:
-                                          "M5 17.9V28a1 1 0 001 1h23a1 1 0 001-1V18m-10 1.88V19a1 1 0 00-1-1h-2a1 1 0 00-1 1v.957c-3.721-.214-7.528-1.22-11.42-3.017a1 1 0 01-.58-.907V11a1 1 0 011-1h25a1 1 0 011 1v5.033a1 1 0 01-.58.907c-3.544 1.637-7.017 2.617-10.42 2.94zM17 18h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2a1 1 0 011-1zm-4-9V7a1 1 0 011-1h8a1 1 0 011 1v2a1 1 0 01-1 1h-8a1 1 0 01-1-1z"
-                                      }
-                                    })
-                                  ]
-                                )
-                              ]),
-                              _vm._v(
-                                "\n                    Office\n                  "
-                              )
-                            ]
-                          )
-                        ]
-                      )
-                    ]),
+                            })
+                          ]
+                        )
+                      ]
+                    ),
                     _vm._v(" "),
-                    _vm._m(1)
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
+                            attrs: {
+                              "data-shrink": "false",
+                              for: "email",
+                              id: "standard-basic-label",
+                              dir: "ltr"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                  Email\n                "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl",
+                            attrs: { dir: "ltr" }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.email,
+                                  expression: "email"
+                                }
+                              ],
+                              staticClass: "MuiInputBase-input MuiInput-input",
+                              attrs: {
+                                "aria-invalid": "false",
+                                id: "email",
+                                name: "email",
+                                type: "email",
+                                value: ""
+                              },
+                              domProps: { value: _vm.email },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.email = $event.target.value
+                                }
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "MuiFormControl-root MuiTextField-root mt-4 mb-3 MuiFormControl-fullWidth"
+                      },
+                      [
+                        _c("vue-phone-number-input", {
+                          attrs: {
+                            "show-code-on-list": "",
+                            "no-flags": "",
+                            size: "lg",
+                            "default-country-code": "KW",
+                            "default-country": "KW"
+                          },
+                          on: {
+                            update: function($event) {
+                              _vm.result = $event.formattedNumber
+                            }
+                          },
+                          model: {
+                            value: _vm.phone,
+                            callback: function($$v) {
+                              _vm.phone = $$v
+                            },
+                            expression: "phone"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
+                            attrs: {
+                              "data-shrink": "false",
+                              for: "address",
+                              id: "standard-basic-label",
+                              dir: "ltr"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                  Address\n                "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl",
+                            attrs: { dir: "ltr" }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.address,
+                                  expression: "address"
+                                }
+                              ],
+                              staticClass: "MuiInputBase-input MuiInput-input",
+                              attrs: {
+                                "aria-invalid": "false",
+                                id: "address",
+                                name: "address",
+                                type: "text",
+                                value: ""
+                              },
+                              domProps: { value: _vm.address },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.address = $event.target.value
+                                }
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth",
+                        staticStyle: { "margin-bottom": "100px" }
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
+                            attrs: { for: "cash" }
+                          },
+                          [_vm._v("Cash")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "MuiInputBase-input MuiInput-input",
+                          attrs: {
+                            id: "cash",
+                            name: "payment_type",
+                            type: "radio"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.paymentType("cash")
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
+                            attrs: { for: "knet" }
+                          },
+                          [_vm._v("K-NET")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "MuiInputBase-input MuiInput-input",
+                          attrs: {
+                            id: "knet",
+                            name: "payment_type",
+                            type: "radio"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.paymentType("knet")
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
+                            attrs: { for: "credit" }
+                          },
+                          [_vm._v("CREDIT CARD")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "MuiInputBase-input MuiInput-input",
+                          attrs: {
+                            id: "credit",
+                            name: "payment_type",
+                            type: "radio"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.paymentType("credit")
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
+                            attrs: { for: "bookey" }
+                          },
+                          [_vm._v("BOOKEY")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "MuiInputBase-input MuiInput-input",
+                          attrs: {
+                            id: "bookey",
+                            name: "payment_type",
+                            type: "radio"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.paymentType("bookey")
+                            }
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm._m(2)
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "action-button-english",
+                    staticStyle: {
+                      "background-color": "white",
+                      "padding-bottom": "8px",
+                      "margin-bottom": "0px",
+                      height: "60px",
+                      "z-index": "4"
+                    }
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "MuiButtonBase-root MuiButton-root MuiButton-contained mb-1  ml-1 mx-auto MuiButton-containedPrimary",
+                        staticStyle: {
+                          width: "97%",
+                          height: "100%",
+                          "box-shadow": "none",
+                          "text-transform": "none"
+                        },
+                        attrs: { tabindex: "0", type: "button", dir: "ltr" },
+                        on: {
+                          click: function($event) {
+                            return _vm.createOrder()
+                          }
+                        }
+                      },
+                      [
+                        _vm._m(3),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "MuiTouchRipple-root" })
+                      ]
+                    )
                   ]
                 )
-              ])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _vm._m(2),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "col-xl-4 text-center col-lg-4 col-md-12 col-sm-12 col-12 product-oder-btn",
-            staticStyle: { background: "transparent" }
-          },
-          [
-            _c(
-              "a",
-              {
-                staticStyle: { "background-color": "red" },
-                on: {
-                  click: function($event) {
-                    return _vm.createCustomer()
-                  }
-                }
-              },
-              [_vm._m(3)]
+              ]
             )
           ]
         )
@@ -41833,28 +42044,27 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "div",
+      "button",
       {
-        staticClass: "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 steppers"
+        staticClass:
+          "MuiButtonBase-root MuiButton-root MuiButton-text back_arrow mt-1 languageMakeDisappearForLargeScreen",
+        staticStyle: {
+          float: "right",
+          height: "50px",
+          "margin-right": "10px",
+          "margin-left": "0px",
+          "font-size": "20px",
+          "padding-bottom": "15px",
+          color: "black",
+          display: "inline",
+          "z-index": "22"
+        },
+        attrs: { tabindex: "0", type: "button" }
       },
       [
-        _c("div", { staticClass: "row" }, [
-          _c("div", {
-            staticClass: "col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 stepper0"
-          }),
-          _vm._v(" "),
-          _c("div", {
-            staticClass: "col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 stepper1"
-          }),
-          _vm._v(" "),
-          _c("div", {
-            staticClass: "col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 stepper1"
-          }),
-          _vm._v(" "),
-          _c("div", {
-            staticClass: "col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 stepper1"
-          })
-        ])
+        _c("span", { staticClass: "MuiButton-label" }, [_vm._v("ع")]),
+        _vm._v(" "),
+        _c("span", { staticClass: "MuiTouchRipple-root" })
       ]
     )
   },
@@ -41865,626 +42075,34 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "tab-content",
-        staticStyle: { "min-height": "450px" },
-        attrs: { id: "nav-tabContent" }
+        staticClass: "row stepperWidth",
+        staticStyle: {
+          position: "fixed",
+          top: "53px",
+          height: "5px",
+          "background-color": "white",
+          "margin-right": "auto",
+          "margin-left": "auto"
+        }
       },
       [
-        _c(
-          "div",
-          {
-            staticClass: "tab-pane fade show active",
-            attrs: {
-              id: "nav-home",
-              role: "tabpanel",
-              "aria-labelledby": "nav-home-tab"
-            }
-          },
-          [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("input", {
-                  staticClass: "additional-info house-block",
-                  attrs: {
-                    type: "text",
-                    placeholder: " ",
-                    value: "",
-                    required: "",
-                    name: "block",
-                    id: "block"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  { staticClass: "add-instruction", attrs: { for: "block" } },
-                  [_vm._v("Block")]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info1 house-street",
-                    attrs: {
-                      id: "street",
-                      placeholder: " ",
-                      value: "",
-                      required: "",
-                      name: "street"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction1",
-                      attrs: { for: "street" }
-                    },
-                    [_vm._v("Street")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info2 house-avanue",
-                    attrs: {
-                      id: "avenue",
-                      placeholder: " ",
-                      value: "",
-                      required: "",
-                      name: "avenue"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction2",
-                      attrs: { for: "avenue" }
-                    },
-                    [_vm._v("Avenue (Optional)")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info3 house-house",
-                    attrs: {
-                      id: "house",
-                      placeholder: " ",
-                      value: "",
-                      required: "",
-                      name: "house"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction3",
-                      attrs: { for: "house" }
-                    },
-                    [_vm._v("House")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info6 house-special-direction",
-                    attrs: {
-                      id: "direction",
-                      placeholder: " ",
-                      value: "",
-                      required: "",
-                      name: "direction"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction6",
-                      attrs: { for: "direction" }
-                    },
-                    [_vm._v("Special Direction (Optional)")]
-                  )
-                ])
-              ]
-            )
-          ]
-        ),
+        _c("div", {
+          staticClass: "col mx-1 align-self-center",
+          staticStyle: {
+            width: "30px",
+            height: "2px",
+            "background-color": "rgb(0, 153, 204)"
+          }
+        }),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "tab-pane fade",
-            attrs: {
-              id: "nav-profile",
-              role: "tabpanel",
-              "aria-labelledby": "nav-profile-tab"
-            }
-          },
-          [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("input", {
-                  staticClass: "additional-info apa-block",
-                  attrs: {
-                    type: "text",
-                    placeholder: " ",
-                    value: "",
-                    required: "",
-                    name: "block",
-                    id: "block"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  { staticClass: "add-instruction", attrs: { for: "block" } },
-                  [_vm._v("Block")]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info1 apa-street",
-                    attrs: {
-                      id: "street",
-                      placeholder: " ",
-                      value: "",
-                      required: "",
-                      name: "street"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction1",
-                      attrs: { for: "street" }
-                    },
-                    [_vm._v("Street")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info2 apa-avanue",
-                    attrs: {
-                      id: "avenue",
-                      placeholder: " ",
-                      value: "",
-                      required: "",
-                      name: "avenue"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction2",
-                      attrs: { for: "avenue" }
-                    },
-                    [_vm._v("Avenue (Optional)")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info3 apa-building",
-                    attrs: {
-                      id: "building",
-                      placeholder: " ",
-                      value: "",
-                      required: "",
-                      name: "building"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction3",
-                      attrs: { for: "building" }
-                    },
-                    [_vm._v("Building")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info4 apa-floor",
-                    attrs: {
-                      id: "floor",
-                      placeholder: " ",
-                      value: "",
-                      required: "",
-                      name: "floor"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction4",
-                      attrs: { for: "floor" }
-                    },
-                    [_vm._v("Floor")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info5 apa-office-no",
-                    attrs: {
-                      id: "office",
-                      placeholder: " ",
-                      value: "",
-                      required: "",
-                      name: "office"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction5",
-                      attrs: { for: "office" }
-                    },
-                    [_vm._v("Office")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info6 apa-special-direction",
-                    attrs: {
-                      id: "direction",
-                      placeholder: " ",
-                      value: "",
-                      required: "",
-                      name: "direction"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction6",
-                      attrs: { for: "direction" }
-                    },
-                    [_vm._v("Special Direction (Optional)")]
-                  )
-                ])
-              ]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "tab-pane fade",
-            attrs: {
-              id: "nav-contact",
-              role: "tabpanel",
-              "aria-labelledby": "nav-contact-tab"
-            }
-          },
-          [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("input", {
-                  staticClass: "additional-info office-block",
-                  attrs: {
-                    type: "text",
-                    value: "",
-                    placeholder: " ",
-                    required: "",
-                    name: "block",
-                    id: "block"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  { staticClass: "add-instruction ", attrs: { for: "block" } },
-                  [_vm._v("Block")]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info1 office-street",
-                    attrs: {
-                      id: "street",
-                      placeholder: " ",
-                      value: "",
-                      required: "",
-                      name: "street"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction1",
-                      attrs: { for: "street" }
-                    },
-                    [_vm._v("Street")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info2 office-avanue",
-                    attrs: {
-                      id: "avenue",
-                      placeholder: " ",
-                      value: "",
-                      required: "",
-                      name: "avenue"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction2",
-                      attrs: { for: "avenue" }
-                    },
-                    [_vm._v("Avenue (Optional)")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info3 office-building",
-                    attrs: {
-                      id: "building",
-                      value: "",
-                      placeholder: " ",
-                      required: "",
-                      name: "building"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction3",
-                      attrs: { for: "building" }
-                    },
-                    [_vm._v("Block")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info4 office-floor",
-                    attrs: {
-                      id: "floor",
-                      value: "",
-                      placeholder: " ",
-                      required: "",
-                      name: "floor"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction4",
-                      attrs: { for: "floor" }
-                    },
-                    [_vm._v("Floor")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info5 office-no",
-                    attrs: {
-                      id: "office",
-                      value: "",
-                      placeholder: " ",
-                      required: "",
-                      name: "office"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction5",
-                      attrs: { for: "office" }
-                    },
-                    [_vm._v("Office No")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon"
-              },
-              [
-                _c("form", [
-                  _c("input", {
-                    staticClass: "additional-info6 office-special-direction",
-                    attrs: {
-                      id: "direction",
-                      placeholder: " ",
-                      value: "",
-                      required: "",
-                      name: "direction"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "add-instruction6",
-                      attrs: { for: "direction" }
-                    },
-                    [_vm._v("Special Direction (Optional)")]
-                  )
-                ])
-              ]
-            )
-          ]
-        )
+        _c("div", {
+          staticClass: "col mx-1 align-self-center",
+          staticStyle: {
+            width: "30px",
+            height: "2px",
+            "background-color": "rgb(209, 206, 206)"
+          }
+        })
       ]
     )
   },
@@ -42496,23 +42114,14 @@ var staticRenderFns = [
       "div",
       {
         staticClass:
-          "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-footer"
+          "MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
       },
       [
-        _c("div", { staticClass: "footer-title powered_by_message" }, [
-          _vm._v("\n          Powered By\n          "),
-          _c(
-            "a",
-            {
-              staticClass: "tryrydalink",
-              attrs: {
-                target: "_blank",
-                href: "https://www.instagram.com/tryryda/"
-              }
-            },
-            [_vm._v("\n            Try Ryda\n          ")]
-          )
-        ])
+        _c("div", {
+          staticClass:
+            "MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl",
+          attrs: { dir: "ltr" }
+        })
       ]
     )
   },
@@ -42520,11 +42129,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "order-btn", attrs: { type: "button" } },
-      [_c("span", { staticClass: "item-content" }, [_vm._v("Next")])]
-    )
+    return _c("span", { staticClass: "MuiButton-label" }, [
+      _c("span", { staticStyle: { "font-size": "1rem" } }, [
+        _vm._v("\n                  Next\n                ")
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -45273,254 +44882,340 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("nav", { staticClass: "order-header" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-block btn-back", attrs: { type: "button" } },
-        [
-          _c(
-            "a",
-            {
-              on: {
-                click: function($event) {
-                  return _vm.$router.go(-1)
+  return _c(
+    "div",
+    {
+      staticClass: "col-lg-12 col-md-12 col-12 p-0 w-100 ",
+      staticStyle: {
+        overflow: "hidden scroll",
+        "background-color": "rgb(244, 245, 245)",
+        "min-height": "calc(100% - 60px)",
+        height: "calc(100% - 60px)"
+      }
+    },
+    [
+      _c("div", { staticClass: "p-0 h-100" }, [
+        _c(
+          "div",
+          {
+            staticClass: "noselect",
+            staticStyle: { background: "white", "min-height": "682px" }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "border-bottom  w-40 detail_header",
+                staticStyle: {
+                  top: "0px",
+                  "background-image": "none",
+                  "background-color": "white",
+                  "z-index": "1000"
                 }
-              }
-            },
-            [
-              _c("i", [
+              },
+              [
                 _c(
-                  "svg",
+                  "button",
                   {
-                    attrs: { width: "1em", height: "1em", viewBox: "0 0 32 32" }
+                    staticClass:
+                      "MuiButtonBase-root MuiButton-root MuiButton-text back_arrow mt-1",
+                    staticStyle: {
+                      float: "left",
+                      height: "50px",
+                      "max-width": "30px",
+                      "margin-left": "10px",
+                      "margin-right": "0px",
+                      display: "inline-block",
+                      "z-index": "22"
+                    },
+                    attrs: { tabindex: "0", type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.$router.go(-1)
+                      }
+                    }
                   },
                   [
-                    _c("path", {
-                      attrs: {
-                        fill: "currentColor",
-                        "fill-rule": "evenodd",
-                        d:
-                          "M10.414 17l4.293 4.293a1 1 0 01-1.414 1.414l-6-6a1 1 0 010-1.414l6-6a1 1 0 111.414 1.414L10.414 15H24a1 1 0 010 2H10.414z"
-                      }
-                    })
-                  ]
-                )
-              ])
-            ]
-          )
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "product-container-main",
-        staticStyle: { width: "100%" },
-        attrs: { id: "product-container" }
-      },
-      [
-        _c("div", { staticClass: "container-fluid" }, [
-          _c("ul", { staticClass: "delivery-review" }, [
-            _c("h4", [_vm._v("Delivery Info")]),
-            _vm._v(" "),
-            _c("li", { staticClass: "delivery-time" }, [
-              _c("a", [
-                _c("span", [
-                  _vm._v(
-                    _vm._s(_vm.$parent.selectedArea.delivery_time) +
-                      " Minutes from Now"
-                  )
-                ]),
-                _vm._v(" "),
-                _c("i", [
-                  _c(
-                    "svg",
-                    {
-                      attrs: {
-                        width: "1em",
-                        height: "1em",
-                        viewBox: "0 0 32 32"
-                      }
-                    },
-                    [
+                    _c("span", { staticClass: "MuiButton-label" }, [
                       _c(
-                        "g",
-                        { attrs: { fill: "none", "fill-rule": "evenodd" } },
+                        "svg",
+                        {
+                          staticClass: "MuiSvgIcon-root",
+                          attrs: {
+                            focusable: "false",
+                            viewBox: "0 0 24 24",
+                            "aria-hidden": "true"
+                          }
+                        },
                         [
-                          _c("path", { attrs: { d: "M4 4h24v24H4z" } }),
-                          _vm._v(" "),
-                          _c("path", { attrs: { d: "M4 4h24v24H4z" } }),
-                          _vm._v(" "),
                           _c("path", {
                             attrs: {
-                              stroke: "#4A4A4A",
-                              "stroke-linecap": "round",
-                              "stroke-linejoin": "round",
-                              "stroke-width": "1.4",
-                              d: "M13 22l6-6-6-6"
+                              d:
+                                "M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
                             }
                           })
                         ]
                       )
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "MuiTouchRipple-root" })
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._m(1)
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "free-space-50" }),
+            _vm._v(" "),
+            _c("div", [
+              _c(
+                "ul",
+                { staticClass: "MuiList-root MuiList-padding" },
+                _vm._l(_vm.cart, function(product) {
+                  return _c(
+                    "li",
+                    {
+                      staticClass: "MuiListItem-root MuiListItem-gutters",
+                      staticStyle: {
+                        "border-bottom": "1px solid rgba(221, 238, 221, 0.933)"
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+                        },
+                        [
+                          _vm._m(2, true),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "MuiGrid-root text-left MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-6 MuiGrid-grid-md-7 MuiGrid-grid-lg-8",
+                              staticStyle: { "font-weight": "300" }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticStyle: { "font-weight": "600" } },
+                                [
+                                  _vm._v(
+                                    "\n                  " +
+                                      _vm._s(product.name) +
+                                      " " +
+                                      _vm._s(product.attributes.addons.length) +
+                                      "\n                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "p-2" },
+                                _vm._l(product.attributes.addons, function(
+                                  addon
+                                ) {
+                                  return product.attributes.addons.length > 0
+                                    ? _c("div", { staticClass: "ml-2" }, [
+                                        _c(
+                                          "p",
+                                          {
+                                            staticClass: "text-muted m-0 px-2",
+                                            staticStyle: {
+                                              "font-size": "0.95rem"
+                                            },
+                                            attrs: { dir: "ltr" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              {
+                                                staticStyle: {
+                                                  "font-weight": "600"
+                                                }
+                                              },
+                                              [_vm._v("Addon: ")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("span", [
+                                              _vm._v(_vm._s(addon.name))
+                                            ])
+                                          ]
+                                        )
+                                      ])
+                                    : _vm._e()
+                                }),
+                                0
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "p-2" },
+                                _vm._l(product.attributes.variants, function(
+                                  variant
+                                ) {
+                                  return product.attributes.variants.length > 0
+                                    ? _c("div", { staticClass: "ml-2" }, [
+                                        _c(
+                                          "p",
+                                          {
+                                            staticClass: "text-muted m-0 px-2",
+                                            staticStyle: {
+                                              "font-size": "0.95rem"
+                                            },
+                                            attrs: { dir: "ltr" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              {
+                                                staticStyle: {
+                                                  "font-weight": "600"
+                                                }
+                                              },
+                                              [_vm._v("Variant: ")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("span", [
+                                              _vm._v(_vm._s(variant.name))
+                                            ])
+                                          ]
+                                        )
+                                      ])
+                                    : _vm._e()
+                                }),
+                                0
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 MuiGrid-grid-md-2"
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticStyle: {
+                                    position: "absolute",
+                                    bottom: "10px",
+                                    right: "14px",
+                                    direction: "rtl",
+                                    "text-align": "right",
+                                    "font-size": "1rem",
+                                    width: "100%",
+                                    "white-space": "nowrap"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                  " +
+                                      _vm._s(product.price) +
+                                      "\n                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "MuiSvgIcon-root",
+                                  staticStyle: {
+                                    position: "absolute",
+                                    color: "red",
+                                    width: "20px",
+                                    right: "15px",
+                                    top: "10px"
+                                  },
+                                  attrs: {
+                                    focusable: "false",
+                                    viewBox: "0 0 24 24",
+                                    "aria-hidden": "true"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.removeCart(product)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("path", {
+                                    attrs: {
+                                      d:
+                                        "M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                                    }
+                                  })
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      )
                     ]
                   )
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "ul",
-            { staticClass: "delivery-review" },
-            [
-              _c("h3", [_vm._v("Order Items")]),
+                }),
+                0
+              ),
               _vm._v(" "),
-              _vm._l(_vm.cart, function(item) {
-                return _c("li", { staticClass: "delivery-time" }, [
-                  _c("div", { staticClass: "row review-row" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price"
+              _c("div", {
+                staticClass: "free-space-80",
+                staticStyle: { "background-color": "white" }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "action-button-english",
+                  staticStyle: {
+                    "background-color": "white",
+                    "padding-bottom": "8px",
+                    "margin-bottom": "0",
+                    height: "60px",
+                    "z-index": "4"
+                  }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "MuiButtonBase-root MuiButton-root MuiButton-contained mb-1  ml-1 mx-auto MuiButton-containedPrimary",
+                      staticStyle: {
+                        width: "97%",
+                        height: "100%",
+                        "box-shadow": "none",
+                        "text-transform": "none"
                       },
-                      [
-                        _c("span", { staticClass: "price1 float-left" }, [
-                          _vm._v(" " + _vm._s(item.name) + " ")
-                        ]),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "price2 float-right" }, [
-                          _vm._v(_vm._s(item.price))
-                        ]),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon increase-item"
-                      },
-                      [
-                        _c("div", { staticClass: "add-remove-btn" }, [
-                          _c("span", { staticClass: "float-right" }, [
-                            _vm._v("(" + _vm._s(item.quantity) + ")")
-                          ])
-                        ])
-                      ]
-                    )
-                  ])
-                ])
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c("ul", { staticClass: "delivery-review" }, [
-            _c("li", { staticClass: "delivery-time" }, [
-              _c("div", { staticClass: "row review-row" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price"
-                  },
-                  [
-                    _c("span", { staticClass: "price3" }, [
-                      _vm._v("Sub Total")
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "price4 subtotal" }, [
-                      _vm._v(" " + _vm._s(_vm.$parent.price) + " ")
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price"
-                  },
-                  [
-                    _c("span", { staticClass: "price3" }, [
-                      _vm._v("Delivery Charges")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass: "price4 delivery_charges",
-                        attrs: { "data-charges": "2" }
-                      },
-                      [
-                        _vm._v(
-                          " " +
-                            _vm._s(_vm.$parent.selectedArea.delivery_charges)
-                        )
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price price-total"
-                  },
-                  [
-                    _c("h3", [_vm._v("Total")]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "price2 grand-total" }, [
-                      _vm._v(" " + _vm._s(_vm.$parent.price))
-                    ])
-                  ]
-                )
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "currency_symbol",
-          attrs: { type: "hidden", value: "" }
-        })
-      ]
-    ),
-    _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass:
-          "col-xl-4 text-center col-lg-4 col-md-12 col-sm-12 col-12 product-oder-btn",
-        staticStyle: { background: "transparent" }
-      },
-      [
-        _c(
-          "router-link",
-          {
-            staticClass: "nav-item nav-link",
-            attrs: { to: { name: "ContactInfo" } }
-          },
-          [
-            _c("button", { staticClass: "order-btn" }, [
-              _c("span", { staticClass: "item-content" }, [
-                _vm._v("Go to Checkout")
-              ])
+                      attrs: { tabindex: "0", type: "button", dir: "ltr" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$router.push("/contact/info")
+                        }
+                      }
+                    },
+                    [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "MuiTouchRipple-root" })
+                    ]
+                  )
+                ]
+              )
             ])
           ]
         )
-      ],
-      1
-    )
-  ])
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -45530,26 +45225,119 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass:
-          "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-footer"
+        staticClass: "row",
+        staticStyle: {
+          position: "absolute",
+          width: "100%",
+          left: "15px",
+          top: "0px",
+          display: "inline-block",
+          "line-height": "3.2"
+        }
       },
       [
-        _c("div", { staticClass: "footer-title powered_by_message" }, [
-          _vm._v("\n        Powered By\n        "),
+        _c("div", { staticClass: "col text-center" }, [
           _c(
-            "a",
+            "p",
             {
-              staticClass: "tryrydalink",
-              attrs: {
-                target: "_blank",
-                href: "https://www.instagram.com/tryryda/"
+              staticStyle: {
+                "font-weight": "600",
+                "font-size": "17px",
+                "max-width": "187px",
+                "margin-left": "auto",
+                "margin-right": "auto",
+                "max-height": "54px",
+                "line-height": "3",
+                overflow: "hidden",
+                "white-space": "nowrap",
+                "text-overflow": "ellipsis"
               }
             },
-            [_vm._v("\n          Try Ryda\n        ")]
+            [_vm._v("\n              Shopping Cart\n            ")]
           )
         ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass:
+          "MuiButtonBase-root MuiButton-root MuiButton-text back_arrow mt-1 languageMakeDisappearForLargeScreen",
+        staticStyle: {
+          float: "right",
+          height: "50px",
+          "margin-right": "10px",
+          "margin-left": "0",
+          "font-size": "20px",
+          "padding-bottom": "15px",
+          color: "black",
+          display: "inline",
+          "z-index": "22"
+        }
+      },
+      [
+        _c("span", { staticClass: "MuiButton-label" }, [_vm._v("ع")]),
+        _vm._v(" "),
+        _c("span", { staticClass: "MuiTouchRipple-root" })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "MuiGrid-root text-center MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-3 MuiGrid-grid-lg-2",
+        staticStyle: { "align-self": "center" }
+      },
+      [_c("div", { staticStyle: { position: "relative" } })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "MuiButton-label" }, [
+      _c("span", {
+        staticClass: "px-1",
+        staticStyle: {
+          position: "absolute",
+          left: "10px",
+          top: "6px",
+          "line-height": "34px",
+          background: "rgba(0, 0, 0, 0.3)",
+          "border-radius": "7px",
+          "min-width": "32px",
+          height: "32px",
+          "font-size": "1rem"
+        }
+      }),
+      _vm._v(" "),
+      _c("span", { staticStyle: { "font-size": "1rem" } }, [
+        _vm._v("\n                Next\n              ")
+      ]),
+      _vm._v(" "),
+      _c("span", {
+        staticStyle: {
+          position: "absolute",
+          right: "10px",
+          top: "6px",
+          "line-height": "34px",
+          "border-radius": "7px",
+          "min-width": "32px",
+          height: "32px",
+          "font-size": "1rem"
+        }
+      })
+    ])
   }
 ]
 render._withStripped = true

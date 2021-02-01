@@ -141,11 +141,13 @@ class ProductController extends Controller
 
 
     public function getProducts(Request $request) {
+        $category = Category::where('id', $request['id'])->first();
         $products = Product::where('category_id', $request['id'])->with('media')->get();
         return response()->json([
             'type' => 'success',
             'message' => 'Product Got Successfully',
             'products' => $products,
+            'category' => $category,
         ]);
     }
 

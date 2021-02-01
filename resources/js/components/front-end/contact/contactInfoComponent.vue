@@ -1,241 +1,125 @@
 <template>
-  <div class="col-md-12 col-sm-12 col-12 ltr-product-details">
-    <div class="row">
-      <div class="product-container-main" id="product-container" style="width: 100%">
-        <header class="review-header">
-          <h1>Checkout</h1>
-          <a @click="$router.go(-1)" class="btn-back">
-            <a>
-              <i>
-                <svg width="1em" height="1em" viewBox="0 0 32 32">
-                  <path fill="currentColor" fill-rule="evenodd"
-                        d="M10.414 17l4.293 4.293a1 1 0 01-1.414 1.414l-6-6a1 1 0 010-1.414l6-6a1 1 0 111.414 1.414L10.414 15H24a1 1 0 010 2H10.414z"></path>
-                </svg>
-              </i>
-            </a>
-          </a>
-        </header>
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 steppers">
-          <div class="row">
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 stepper0"></div>
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 stepper1"></div>
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 stepper1"></div>
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 stepper1"></div>
-          </div>
+  <div class="col-lg-12 col-md-12 col-12 p-0 w-100 " style="overflow: hidden scroll; background-color: rgb(244, 245, 245); min-height: calc(100% - 60px); height: calc(100% - 60px);">
+    <div class="p-0 h-100">
+      <div class="  w-100 mx-0 " style="background-color: white; height: 769px; min-height: 690px;">
+        <div class="border-bottom  w-100 detail_header" style="top: 0px; background-image: none; background-color: white; z-index: 1000;">
+          <button v-on:click="$router.go(-1)" class="MuiButtonBase-root MuiButton-root MuiButton-text back_arrow mt-1" tabindex="0" type="button" style="float: left; height: 50px; max-width: 30px; margin-left: 10px; margin-right: 0px; display: inline-block; z-index: 22;">
+            <span class="MuiButton-label">
+              <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
+              </svg>
+            </span>
+            <span class="MuiTouchRipple-root"></span>
+          </button>
+          <button class="MuiButtonBase-root MuiButton-root MuiButton-text back_arrow mt-1 languageMakeDisappearForLargeScreen" tabindex="0" type="button" style="float: right; height: 50px; margin-right: 10px; margin-left: 0px; font-size: 20px; padding-bottom: 15px; color: black; display: inline; z-index: 22;">
+            <span class="MuiButton-label">ع</span>
+            <span class="MuiTouchRipple-root"></span>
+          </button>
         </div>
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 order-contact">
-              <h1>Contact Information</h1>
-              <p>We’ll use it to get back to you for order updates</p>
-              <div class="row contact-row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                  <input type="text" v-model="name" placeholder="Enter Name" required name="name" id="name" class="additional-info">
-                  <label for="name" class="add-instruction">Name</label>
-                </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                  <vue-phone-number-input
-                      show-code-on-list
-                      default-country-code="KW"
-                      :preferred-countries="['KW']"
-                      size="lg"
-                      @update="resultsExample = $event"
-                      v-model="phone" />
-                </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                  <input type="text" placeholder="Enter Email" required="" name="email" id="email" class="additional-info1">
-                  <label v-model="email" for="email" class="add-instruction1">E-mail (Optional)</label>
+        <div class="border-top w-100" style="margin-top: 55px; background-color: white;">
+          <div class="row stepperWidth" style="position: fixed; top: 53px; height: 5px; background-color: white; margin-right: auto; margin-left: auto;">
+            <div class="col mx-1 align-self-center" style="width: 30px; height: 2px; background-color: rgb(0, 153, 204);"></div>
+            <div class="col mx-1 align-self-center" style="width: 30px; height: 2px; background-color: rgb(209, 206, 206);"></div>
+          </div>
+          <svg height="100" viewBox="0 -20 440.4 440" width="100" style="margin-top: 98px;">
+            <path d="m440.398438 90.199219v290.859375c.003906 11.046875-8.953126 20.003906-20 20h-400.398438c-11.046875.003906-20.00390625-8.953125-20-20v-290.859375zm0 0" fill="#00efd1"></path>
+            <path d="m440.398438 20.199219v70h-440.398438v-70c-.00390625-11.046875 8.953125-20.003907 20-20h400.398438c11.046874-.003907 20.003906 8.953125 20 20zm0 0" fill="#00acea"></path>
+            <path d="m390.199219 29.171875h30v30h-30zm0 0" fill="#fedb41"></path>
+            <path d="m338.199219 29.171875h30v30h-30zm0 0" fill="#fedb41"></path>
+            <path d="m20.199219 29.171875h290v30h-290zm0 0" fill="#fedb41"></path>
+            <path d="m169.410156 253.28125c9.964844 0 19.464844 4.21875 26.144532 11.613281 6.683593 7.394531 9.921874 17.269531 8.914062 27.183594v56.480469h-149.570312v-56.480469c-1.003907-9.914063 2.234374-19.792969 8.917968-27.1875s16.1875-11.613281 26.152344-11.609375h26.890625v.039062l4.78125 19.660157h-.519531l-7.019532 44.550781v.007812l15.589844 15 16.578125-15-8.070312-44.550781-16.558594-.007812h16.089844l4.789062-19.660157v-.039062zm0 0" fill="#00acea"></path>
+            <path d="m162.429688 178.28125v26.207031c0 18.742188-15.191407 33.933594-33.929688 33.933594s-33.929688-15.191406-33.929688-33.933594v-25.648437c13.441407 2.238281 22.269532-4.589844 27.628907-12.410156h.011719c7.097656 10.410156 19.757812 20.628906 40.21875 11.851562zm0 0" fill="#f7caa5"></path>
+            <path d="m162.429688 170.699219v7.582031c-20.460938 8.777344-33.121094-1.441406-40.21875-11.851562-3.273438-4.84375-5.816407-10.144532-7.539063-15.730469h27.757813c11.042968.003906 19.996093 8.957031 20 20zm0 0" fill="#4b5d63"></path>
+            <path d="m138.199219 272.988281 8.070312 44.550781-16.578125 15-15.589844-15v-.007812l7.019532-44.550781h.519531zm0 0" fill="#fedb41"></path>
+            <path d="m142.519531 253.28125v.039062l-4.789062 19.660157h-16.089844l-4.78125-19.660157v-.039062zm0 0" fill="#fedb41"></path>
+            <path d="m122.210938 166.429688h-.011719c-5.359375 7.820312-14.1875 14.648437-27.628907 12.410156v-8.140625c.003907-11.042969 8.957032-19.996094 20-20h.101563c1.722656 5.585937 4.265625 10.886719 7.539063 15.730469zm0 0" fill="#4b5d63"></path>
+            <g fill="#fedb41">
+              <path d="m243.199219 195.628906h82c3.316406 0 6-2.683594 6-6 0-3.3125-2.683594-6-6-6h-82c-3.3125 0-6 2.6875-6 6 0 3.316406 2.6875 6 6 6zm0 0"></path>
+              <path d="m243.199219 225.628906h142c3.316406 0 6-2.683594 6-6 0-3.3125-2.683594-6-6-6h-142c-3.3125 0-6 2.6875-6 6 0 3.316406 2.6875 6 6 6zm0 0"></path>
+              <path d="m385.199219 243.628906h-142c-3.3125 0-6 2.6875-6 6 0 3.316406 2.6875 6 6 6h142c3.316406 0 6-2.683594 6-6 0-3.3125-2.683594-6-6-6zm0 0"></path>
+              <path d="m385.199219 273.628906h-142c-3.3125 0-6 2.6875-6 6 0 3.316406 2.6875 6 6 6h142c3.316406 0 6-2.683594 6-6 0-3.3125-2.683594-6-6-6zm0 0"></path>
+              <path d="m385.199219 303.628906h-142c-3.3125 0-6 2.6875-6 6 0 3.316406 2.6875 6 6 6h142c3.316406 0 6-2.683594 6-6 0-3.3125-2.683594-6-6-6zm0 0"></path>
+            </g>
+          </svg>
+          <p class="text-muted mt-3 mb-0" style="font-size: 22px;">
+            Contact Information
+          </p>
+          <p class="mx-auto w-75" style="font-size: 15px; color: rgb(194, 194, 194);">
+            We need this information to contact you and get the order delivered
+          </p>
+          <div class="w-100 px-4">
+            <form>
+              <div class="MuiFormControl-root MuiTextField-root my-4 MuiFormControl-fullWidth">
+                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="name" id="standard-basic-label" dir="ltr">
+                  Name *
+                </label>
+                <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl" dir="ltr">
+                  <input aria-invalid="false" id="name" name="name" v-model="name" type="text" class="MuiInputBase-input MuiInput-input" value="">
                 </div>
               </div>
-            </div>
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 products-order-address" style="min-height: 400px !important;">
-              <nav>
-                <label class="nav_title">Choose Unit Type</label>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                  <a class="nav-item nav-link  type-link" data-type="House" id="nav-house-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
-                    <i>
-                      <svg width="1em" height="1em" viewBox="0 0 35 35">
-                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M8 15.786v12.198C8 28.544 8.455 29 9.016 29H15v-7.115h5V29h5.984c.56 0 1.016-.455 1.016-1.016V15.786M4 17.82L16.302 5.315a1.016 1.016 0 011.422-.027L31 17.82"></path>
-                      </svg>
-                    </i>
-                    House
-                  </a>
-                  <a class="nav-item nav-link  type-link" id="nav-appartment-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
-                    <i>
-                      <svg width="1em" height="1em" viewBox="0 0 35 35">
-                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"
-                              d="M5 29V6a1 1 0 011-1h23a1 1 0 011 1v23a1 1 0 01-1 1h-8v-8.333h-7V30H6a1 1 0 01-1-1zm6-18.5h1-1zm0 6h1-1zm6-6h1-1zm0 6h1-1zm6-6h1-1zm0 6h1-1z"></path>
-                      </svg>
-                    </i>
-                    Apartment
-                  </a>
-                  <a class="nav-item nav-link  type-link" id="nav-office-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
-                    <i>
-                      <svg width="1em" height="1em" viewBox="0 0 35 35">
-                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"
-                              d="M5 17.9V28a1 1 0 001 1h23a1 1 0 001-1V18m-10 1.88V19a1 1 0 00-1-1h-2a1 1 0 00-1 1v.957c-3.721-.214-7.528-1.22-11.42-3.017a1 1 0 01-.58-.907V11a1 1 0 011-1h25a1 1 0 011 1v5.033a1 1 0 01-.58.907c-3.544 1.637-7.017 2.617-10.42 2.94zM17 18h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2a1 1 0 011-1zm-4-9V7a1 1 0 011-1h8a1 1 0 011 1v2a1 1 0 01-1 1h-8a1 1 0 01-1-1z"></path>
-                      </svg>
-                    </i>
-                    Office
-                  </a>
+              <div class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth">
+                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="email" id="standard-basic-label" dir="ltr">
+                  Email
+                </label>
+                <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl" dir="ltr">
+                  <input aria-invalid="false" id="email" name="email" v-model="email" type="email" class="MuiInputBase-input MuiInput-input" value="">
                 </div>
-              </nav>
-              <div class="tab-content" id="nav-tabContent" style="min-height: 450px;">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                    <input type="text" placeholder=" " value="" required="" name="block" id="block" class="additional-info house-block">
-                    <label for="block" class="add-instruction">Block</label>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                    <form>
-                      <input id="street" placeholder=" " value="" required="" name="street" class="additional-info1 house-street">
-                      <label for="street" class="add-instruction1">Street</label>
-                    </form>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                    <form>
-                      <input id="avenue" placeholder=" " value="" required="" name="avenue" class="additional-info2 house-avanue">
-                      <label for="avenue" class="add-instruction2">Avenue (Optional)</label>
-                    </form>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                    <form>
-                      <input id="house" placeholder=" " value="" required="" name="house" class="additional-info3 house-house">
-                      <label for="house" class="add-instruction3">House</label>
-                    </form>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                    <form>
-                      <input id="direction" placeholder=" " value="" required="" name="direction" class="additional-info6 house-special-direction">
-                      <label for="direction" class="add-instruction6">Special Direction (Optional)</label>
-                    </form>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                    <input type="text" placeholder=" " value="" required="" name="block" id="block" class="additional-info apa-block">
-                    <label for="block" class="add-instruction">Block</label>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                    <form>
-                      <input id="street" placeholder=" " value="" required="" name="street" class="additional-info1 apa-street">
-                      <label for="street" class="add-instruction1">Street</label>
-                    </form>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                    <form>
-                      <input id="avenue" placeholder=" " value="" required="" name="avenue" class="additional-info2 apa-avanue">
-                      <label for="avenue" class="add-instruction2">Avenue (Optional)</label>
-                    </form>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                    <form>
-                      <input id="building" placeholder=" " value="" required="" name="building" class="additional-info3 apa-building">
-                      <label for="building" class="add-instruction3">Building</label>
-                    </form>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                    <form>
-                      <input id="floor" placeholder=" " value="" required="" name="floor" class="additional-info4 apa-floor">
-                      <label for="floor" class="add-instruction4">Floor</label>
-                    </form>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                    <form>
-                      <input id="office" placeholder=" " value="" required="" name="office" class="additional-info5 apa-office-no">
-                      <label for="office" class="add-instruction5">Office</label>
-                    </form>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                    <form>
-                      <input id="direction" placeholder=" " value="" required="" name="direction" class="additional-info6 apa-special-direction">
-                      <label for="direction" class="add-instruction6">Special Direction (Optional)</label>
-                    </form>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-                    <input type="text" value="" placeholder=" " required="" name="block" id="block" class="additional-info office-block">
-                    <label for="block" class="add-instruction ">Block</label>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
+              </div>
+              <div class="MuiFormControl-root MuiTextField-root mt-4 mb-3 MuiFormControl-fullWidth">
+                <vue-phone-number-input
+                    show-code-on-list
+                    no-flags
+                    size="lg"
+                    v-model="phone"
+                    @update="result = $event.formattedNumber"
+                    default-country-code="KW"
+                    default-country="KW"
+                />
+              </div>
 
-                    <form>
-                      <input id="street" placeholder=" " value="" required="" name="street" class="additional-info1 office-street">
-                      <label for="street" class="add-instruction1">Street</label>
-                    </form>
-
-                  </div>
-
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-
-                    <form>
-                      <input id="avenue" placeholder=" " value="" required="" name="avenue" class="additional-info2 office-avanue">
-                      <label for="avenue" class="add-instruction2">Avenue (Optional)</label>
-                    </form>
-
-                  </div>
-
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-
-                    <form>
-                      <input id="building" value="" placeholder=" " required="" name="building" class="additional-info3 office-building">
-                      <label for="building" class="add-instruction3">Block</label>
-                    </form>
-
-                  </div>
-
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-
-                    <form>
-                      <input id="floor" value="" placeholder=" " required="" name="floor" class="additional-info4 office-floor">
-                      <label for="floor" class="add-instruction4">Floor</label>
-                    </form>
-
-                  </div>
-
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-
-                    <form>
-                      <input id="office" value="" placeholder=" " required="" name="office" class="additional-info5 office-no">
-                      <label for="office" class="add-instruction5">Office No</label>
-                    </form>
-
-                  </div>
-
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-price optional-addon">
-
-                    <form>
-                      <input id="direction" placeholder=" " value="" required="" name="direction" class="additional-info6 office-special-direction">
-                      <label for="direction" class="add-instruction6">Special Direction (Optional)</label>
-                    </form>
-
-                  </div>
-
+              <div class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth">
+                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="address" id="standard-basic-label" dir="ltr">
+                  Address
+                </label>
+                <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl" dir="ltr">
+                  <input aria-invalid="false" id="address" name="address" v-model="address" type="text" class="MuiInputBase-input MuiInput-input" value="">
                 </div>
               </div>
 
-            </div>
+              <div class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth" style="margin-bottom: 100px;">
+                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" for="cash">Cash</label>
+                  <input v-on:click="paymentType('cash')" id="cash" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
+                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" for="knet">K-NET</label>
+                  <input v-on:click="paymentType('knet')" id="knet" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
+                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" for="credit">CREDIT CARD</label>
+                  <input v-on:click="paymentType('credit')" id="credit" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
+                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" for="bookey">BOOKEY</label>
+                  <input v-on:click="paymentType('bookey')" id="bookey" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
+              </div>
 
+
+              <div class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth">
+<!--                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="address" id="standard-basic-label" dir="ltr">-->
+<!--                  Address-->
+<!--                </label>-->
+                <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl" dir="ltr">
+<!--                  <input aria-invalid="false" id="address" name="address" v-model="address" type="text" class="MuiInputBase-input MuiInput-input" value="">-->
+                </div>
+              </div>
+
+            </form>
           </div>
-        </div>
-      </div>
-      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-footer">
-        <div class="footer-title powered_by_message">
-          Powered By
-          <a target="_blank" class="tryrydalink" href="https://www.instagram.com/tryryda/">
-            Try Ryda
-          </a>
-        </div>
-      </div>
-      <div style="background:transparent;" class="col-xl-4 text-center col-lg-4 col-md-12 col-sm-12 col-12 product-oder-btn">
-<!--        <router-link :to="{name: 'DeliveryInfo'}" class="nav-item nav-link">-->
-          <a @click="createCustomer()" style="background-color: red">
-            <button type="button" class="order-btn">
-              <span class="item-content">Next</span>
+          <div class="action-button-english" style="background-color: white; padding-bottom: 8px; margin-bottom: 0px; height: 60px; z-index: 4;">
+            <button v-on:click="createOrder()" class="MuiButtonBase-root MuiButton-root MuiButton-contained mb-1  ml-1 mx-auto MuiButton-containedPrimary" tabindex="0" type="button" dir="ltr" style="width: 97%; height: 100%; box-shadow: none; text-transform: none;">
+              <span class="MuiButton-label">
+                <span style="font-size: 1rem;">
+                  Next
+                </span>
+              </span>
+              <span class="MuiTouchRipple-root"></span>
             </button>
-          </a>
-<!--        </router-link>-->
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -249,32 +133,43 @@ export default {
       name: '',
       phone: '',
       email: '',
-      resultsExample: null
+      address: '',
+      payment_type: '',
+      result: null
     }
   },
   created() {
   },
   methods: {
-    createCustomer() {
+    createOrder() {
       let self = this
-      let name = this.name
-      let phone = this.resultsExample
-      let email = this.email
 
-      axios.post(APP_URL+'/api/createCustomer', {
+      let name = this.name
+      let address = this.address
+      let phone = this.result
+      let email = this.email
+      let payment_type = this.payment_type
+
+      axios.post(APP_URL+'/createOrder', {
         'name': name,
         'phone': phone,
         'email': email,
+        'address': address,
+        'payment_type': payment_type,
+        'area': self.$parent.selectedArea,
       })
         .then(response => {
           if (response.data.type === 'success') {
             console.log(response.data)
-            self.$router.push('/delivery/info')
+            window.location = "/payment?id="+response.data.order_id
           }
         })
         .catch(e => {
           this.errors.push(e)
         })
+    },
+    paymentType(type) {
+      this.payment_type = type
     }
   }
 }

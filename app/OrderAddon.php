@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class OrderAddon extends Model
 {
     //
+    protected $guarded = [];
 }
