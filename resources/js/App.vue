@@ -11,18 +11,18 @@
           </div>
           <div class="col-lg-7 col-md-7 h-100 d-md-none d-sm-none d-xs-none d-none d-lg-block d-md-block p-0" style="background-color: gray; overflow-y: hidden; position: fixed; left: 41.64vw; object-fit: fill;"><div>
             <div>
-              <button class="MuiButtonBase-root MuiButton-root MuiButton-contained languageButtonLargeScreenEnglish header-button-cricle scale-up-center" tabindex="0" type="button" style="padding: 0px; border-radius: 20px; z-index: 3; position: fixed; top: 13px; right: 30px; display: none; max-width: 32px;">
-                <span class="MuiButton-label">ع</span>
-                <span class="MuiTouchRipple-root"></span>
-              </button>
-              <button class="MuiButtonBase-root MuiButton-root MuiButton-contained SearchButtonLargeScreenEnglish header-button-cricle scale-up-center MuiButton-containedSizeSmall MuiButton-sizeSmall" tabindex="0" type="button" id="search_button" style="max-width: 32px; min-height: 30px; z-index: 3; position: fixed; top: 13px; right: 30px; display: none;">
-                <span class="MuiButton-label">
-                  <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true" style="color: black; width: 2px">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-                  </svg>
-                </span>
-                <span class="MuiTouchRipple-root"></span>
-              </button>
+<!--              <button class="MuiButtonBase-root MuiButton-root MuiButton-contained languageButtonLargeScreenEnglish header-button-cricle scale-up-center" tabindex="0" type="button" style="padding: 0px; border-radius: 20px; z-index: 3; position: fixed; top: 13px; right: 30px; display: none; max-width: 32px;">-->
+<!--                <span class="MuiButton-label">ع</span>-->
+<!--                <span class="MuiTouchRipple-root"></span>-->
+<!--              </button>-->
+<!--              <button class="MuiButtonBase-root MuiButton-root MuiButton-contained SearchButtonLargeScreenEnglish header-button-cricle scale-up-center MuiButton-containedSizeSmall MuiButton-sizeSmall" tabindex="0" type="button" id="search_button" style="max-width: 32px; min-height: 30px; z-index: 3; position: fixed; top: 13px; right: 30px; display: none;">-->
+<!--                <span class="MuiButton-label">-->
+<!--                  <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true" style="color: black; width: 2px">-->
+<!--                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>-->
+<!--                  </svg>-->
+<!--                </span>-->
+<!--                <span class="MuiTouchRipple-root"></span>-->
+<!--              </button>-->
               <button v-on:click="$router.push('/order-review')" class="MuiButtonBase-root MuiButton-root MuiButton-contained menuButtonLargeScreenEnglish header-button-cricle scale-up-center MuiButton-containedSizeSmall MuiButton-sizeSmall" tabindex="0" type="button" style="max-width: 27px; min-height: 30px; z-index: 3; position: fixed; top: 13px; display: none;">
                 <span class="MuiButton-label">
                   <svg id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve">
@@ -35,14 +35,14 @@
                 </span>
                 <span class="MuiTouchRipple-root"></span>
               </button>
-              <button class="MuiButtonBase-root MuiButton-root MuiButton-contained historyButtonLargeScreenEnglish header-button-cricle scale-up-center MuiButton-containedSizeSmall MuiButton-sizeSmall" tabindex="0" type="button" style="max-width: 27px; min-height: 30px; z-index: 3; position: fixed; top: 13px; display: none;">
-                <span class="MuiButton-label">
-                  <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"></path>
-                  </svg>
-                </span>
-                <span class="MuiTouchRipple-root"></span>
-              </button>
+<!--              <button class="MuiButtonBase-root MuiButton-root MuiButton-contained historyButtonLargeScreenEnglish header-button-cricle scale-up-center MuiButton-containedSizeSmall MuiButton-sizeSmall" tabindex="0" type="button" style="max-width: 27px; min-height: 30px; z-index: 3; position: fixed; top: 13px; display: none;">-->
+<!--                <span class="MuiButton-label">-->
+<!--                  <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">-->
+<!--                    <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"></path>-->
+<!--                  </svg>-->
+<!--                </span>-->
+<!--                <span class="MuiTouchRipple-root"></span>-->
+<!--              </button>-->
             </div>
             <div class="changeToFixedBackground m-0 p-0" style="height: 100%; width: 100%; background: url(/images/images/background/1603610553.png) center center / cover no-repeat; position: absolute;"></div>
           </div>

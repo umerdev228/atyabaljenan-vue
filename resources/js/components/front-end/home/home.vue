@@ -70,7 +70,7 @@
           <div class="scrollable-div">
             <div class="row border-bottom bg-white disable-scroll-bar" style="min-height: 65px; direction: ltr;">
               <div class="col-4 bg-white m-auto">
-                <button v-on:click="$router.go('/areas')" class="MuiButtonBase-root MuiButton-root" tabindex="0" type="button" style="line-height: 3; width: 80px; max-height: 40px; text-transform: none; font-weight: bold; box-shadow: none; border-radius: 3px; padding: 0px;">
+                <button v-on:click="$router.push('/areas')" class="MuiButtonBase-root MuiButton-root" tabindex="0" type="button" style="line-height: 3; width: 80px; max-height: 40px; text-transform: none; font-weight: bold; box-shadow: none; border-radius: 3px; padding: 0px;">
                   <span class="MuiButton-label" v-if="$parent.selectedArea === null">Choose Delivery Area</span>
                   <span class="MuiButton-label" v-else>{{$parent.selectedArea.name}}</span>
                 </button>

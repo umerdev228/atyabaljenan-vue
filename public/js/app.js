@@ -2295,6 +2295,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "detailComponent",
@@ -2304,13 +2335,22 @@ __webpack_require__.r(__webpack_exports__);
       category: '',
       selectedVariants: '',
       instruction: '',
-      quantity: ''
+      quantity: '',
+      search: ''
     };
   },
   created: function created() {},
   mounted: function mounted() {
     this.$parent.loading = true;
     this.getProducts();
+  },
+  computed: {
+    filteredProducts: function filteredProducts() {
+      var self = this;
+      return self.products.filter(function (val) {
+        return val.name.toLowerCase().includes(self.search.toLowerCase());
+      });
+    }
   },
   methods: {
     getProducts: function getProducts() {
@@ -3635,6 +3675,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "detailComponent",
   data: function data() {
     return {
+      price: 0.00,
       quantity: 1,
       c1Setting: {
         arrows: false,
@@ -3721,10 +3762,10 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         if (response.data.type === 'success') {
           self.product = response.data.product;
+          self.price = response.data.product.price;
           self.result = true;
-          console.log(self.product.media.length);
-          _this.$parent.loading = false;
-          _this.$parent.price = response.data.price;
+          self.$parent.loading = false;
+          self.$parent.price = response.data.price;
 
           if (response.data.cart !== null) {
             self.quantity = response.data.cart.quantity;
@@ -3789,6 +3830,7 @@ __webpack_require__.r(__webpack_exports__);
     incrementItem: function incrementItem() {
       if (this.product.stock > this.quantity) {
         this.quantity += 1;
+        this.price = this.quantity * this.product.price;
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.toasted.success('Quantity Incremented Successfully');
       } else {
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.toasted.error('Only ' + this.product.stock + ' available.');
@@ -3797,6 +3839,7 @@ __webpack_require__.r(__webpack_exports__);
     decrementItem: function decrementItem() {
       if (this.quantity > 1) {
         this.quantity -= 1;
+        this.price = this.quantity * this.product.price;
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.toasted.show('Quantity decremented Successfully');
       }
     },
@@ -3809,10 +3852,13 @@ __webpack_require__.r(__webpack_exports__);
         var i = self.selectedAddons.findIndex(function (x) {
           return x.id === data.id;
         });
+        var v = self.selectedAddons[i];
+        self.price -= v.price;
         self.selectedAddons.splice(i, 1);
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.toasted.success('Addon Removed Successfully');
       } else {
         this.selectedAddons.push(data);
+        self.price += data.price;
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.toasted.success('Addon Added Successfully');
       }
     },
@@ -3825,10 +3871,13 @@ __webpack_require__.r(__webpack_exports__);
         var i = self.selectedVariants.findIndex(function (x) {
           return x.id === data.id;
         });
+        var v = self.selectedVariants[i];
+        self.price -= v.price;
         self.selectedVariants.splice(i, 1);
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.toasted.success('Addon Removed Successfully');
       } else {
         this.selectedVariants.push(data);
+        self.price += data.price;
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.toasted.success('Addon Added Successfully');
       }
     },
@@ -40435,56 +40484,6 @@ var render = function() {
                 [
                   _c("div", [
                     _c("div", [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "MuiButtonBase-root MuiButton-root MuiButton-contained SearchButtonLargeScreenEnglish header-button-cricle scale-up-center MuiButton-containedSizeSmall MuiButton-sizeSmall",
-                          staticStyle: {
-                            "max-width": "32px",
-                            "min-height": "30px",
-                            "z-index": "3",
-                            position: "fixed",
-                            top: "13px",
-                            right: "30px",
-                            display: "none"
-                          },
-                          attrs: {
-                            tabindex: "0",
-                            type: "button",
-                            id: "search_button"
-                          }
-                        },
-                        [
-                          _c("span", { staticClass: "MuiButton-label" }, [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "MuiSvgIcon-root",
-                                staticStyle: { color: "black", width: "2px" },
-                                attrs: {
-                                  focusable: "false",
-                                  viewBox: "0 0 24 24",
-                                  "aria-hidden": "true"
-                                }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    d:
-                                      "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "MuiTouchRipple-root" })
-                        ]
-                      ),
-                      _vm._v(" "),
                       _c(
                         "button",
                         {
@@ -40535,48 +40534,6 @@ var render = function() {
                           _vm._v(" "),
                           _c("span", { staticClass: "MuiTouchRipple-root" })
                         ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "MuiButtonBase-root MuiButton-root MuiButton-contained historyButtonLargeScreenEnglish header-button-cricle scale-up-center MuiButton-containedSizeSmall MuiButton-sizeSmall",
-                          staticStyle: {
-                            "max-width": "27px",
-                            "min-height": "30px",
-                            "z-index": "3",
-                            position: "fixed",
-                            top: "13px",
-                            display: "none"
-                          },
-                          attrs: { tabindex: "0", type: "button" }
-                        },
-                        [
-                          _c("span", { staticClass: "MuiButton-label" }, [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "MuiSvgIcon-root",
-                                attrs: {
-                                  focusable: "false",
-                                  viewBox: "0 0 24 24",
-                                  "aria-hidden": "true"
-                                }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    d:
-                                      "M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "MuiTouchRipple-root" })
-                        ]
                       )
                     ]),
                     _vm._v(" "),
@@ -40600,36 +40557,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass:
-          "MuiButtonBase-root MuiButton-root MuiButton-contained languageButtonLargeScreenEnglish header-button-cricle scale-up-center",
-        staticStyle: {
-          padding: "0px",
-          "border-radius": "20px",
-          "z-index": "3",
-          position: "fixed",
-          top: "13px",
-          right: "30px",
-          display: "none",
-          "max-width": "32px"
-        },
-        attrs: { tabindex: "0", type: "button" }
-      },
-      [
-        _c("span", { staticClass: "MuiButton-label" }, [_vm._v("ع")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "MuiTouchRipple-root" })
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -41045,6 +40973,173 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticStyle: {
+                  height: "auto",
+                  "margin-top": "1px",
+                  "background-color": "white",
+                  "border-bottom": "1px solid rgb(212, 213, 212)"
+                }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "row m-0 w-100",
+                    staticStyle: {
+                      "border-top": "1px solid rgb(222, 226, 230)"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "scrollable-div" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "row border-bottom bg-white disable-scroll-bar",
+                            staticStyle: {
+                              "min-height": "65px",
+                              direction: "ltr"
+                            }
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "col-4 bg-white m-auto" },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "MuiButtonBase-root MuiButton-root",
+                                    staticStyle: {
+                                      "line-height": "3",
+                                      width: "80px",
+                                      "max-height": "40px",
+                                      "text-transform": "none",
+                                      "font-weight": "bold",
+                                      "box-shadow": "none",
+                                      "border-radius": "3px",
+                                      padding: "0px"
+                                    },
+                                    attrs: { tabindex: "0", type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.$router.push("/areas")
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm.$parent.selectedArea === null
+                                      ? _c(
+                                          "span",
+                                          { staticClass: "MuiButton-label" },
+                                          [_vm._v("Choose Delivery Area")]
+                                        )
+                                      : _c(
+                                          "span",
+                                          { staticClass: "MuiButton-label" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.$parent.selectedArea.name
+                                              )
+                                            )
+                                          ]
+                                        )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    staticClass:
+                      "MuiPaper-root jss21 MuiPaper-elevation1 MuiPaper-rounded",
+                    staticStyle: { direction: "ltr" }
+                  },
+                  [
+                    _c("div", { staticClass: "MuiInputBase-root jss22" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.search,
+                            expression: "search"
+                          }
+                        ],
+                        staticClass: "MuiInputBase-input",
+                        attrs: {
+                          placeholder: "Search for products",
+                          type: "text",
+                          "aria-label": "Search for products",
+                          value: ""
+                        },
+                        domProps: { value: _vm.search },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.search = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "MuiButtonBase-root MuiIconButton-root jss23",
+                        attrs: {
+                          tabindex: "0",
+                          type: "submit",
+                          "aria-label": "search"
+                        }
+                      },
+                      [
+                        _c("span", { staticClass: "MuiIconButton-label" }, [
+                          _c(
+                            "svg",
+                            {
+                              staticClass: "MuiSvgIcon-root",
+                              attrs: {
+                                focusable: "false",
+                                viewBox: "0 0 24 24",
+                                "aria-hidden": "true"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "MuiTouchRipple-root" })
+                      ]
+                    )
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
             _c("div", {
               staticClass: "free-space-80",
               staticStyle: { "background-color": "white" }
@@ -41057,7 +41152,7 @@ var render = function() {
                 staticStyle: { "background-color": "white", width: "98%" },
                 attrs: { dir: "ltr" }
               },
-              _vm._l(_vm.products, function(product) {
+              _vm._l(_vm.filteredProducts, function(product) {
                 return _c(
                   "div",
                   {
@@ -43941,7 +44036,7 @@ var render = function() {
                           attrs: { tabindex: "0", type: "button" },
                           on: {
                             click: function($event) {
-                              return _vm.$router.go("/areas")
+                              return _vm.$router.push("/areas")
                             }
                           }
                         },
@@ -45594,9 +45689,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n          " +
-                            _vm._s(_vm.product.price) +
-                            "\n        "
+                          "\n          " + _vm._s(_vm.price) + "\n        "
                         )
                       ]
                     )

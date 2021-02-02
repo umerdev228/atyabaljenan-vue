@@ -31,9 +31,40 @@
             <span class="MuiTouchRipple-root"></span>
           </button>
         </div>
+        <div style="height: auto; margin-top: 1px; background-color: white; border-bottom: 1px solid rgb(212, 213, 212);">
+          <div class="row m-0 w-100" style="border-top: 1px solid rgb(222, 226, 230);">
+            <div class="col-12">
+              <div class="scrollable-div">
+                <div class="row border-bottom bg-white disable-scroll-bar" style="min-height: 65px; direction: ltr;">
+                  <div class="col-4 bg-white m-auto">
+                    <button v-on:click="$router.push('/areas')" class="MuiButtonBase-root MuiButton-root" tabindex="0" type="button" style="line-height: 3; width: 80px; max-height: 40px; text-transform: none; font-weight: bold; box-shadow: none; border-radius: 3px; padding: 0px;">
+                      <span class="MuiButton-label" v-if="$parent.selectedArea === null">Choose Delivery Area</span>
+                      <span class="MuiButton-label" v-else>{{$parent.selectedArea.name}}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <form class="MuiPaper-root jss21 MuiPaper-elevation1 MuiPaper-rounded" style="direction: ltr;">
+            <div class="MuiInputBase-root jss22">
+              <input v-model="search" placeholder="Search for products" type="text" aria-label="Search for products" class="MuiInputBase-input" value="">
+            </div>
+            <button class="MuiButtonBase-root MuiIconButton-root jss23" tabindex="0" type="submit" aria-label="search">
+          <span class="MuiIconButton-label">
+            <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+            </svg>
+          </span>
+              <span class="MuiTouchRipple-root"></span>
+            </button>
+          </form>
+
+        </div>
+
         <div class="free-space-80" style="background-color: white;"></div>
         <div class="row mx-auto m-0" dir="ltr" style="background-color: white; width: 98%;">
-          <div v-for="product in products" class="col-6 mb-5" style="width: 50%; min-height: 240px; padding-right: 8px; padding-left: 8px;">
+          <div v-for="product in filteredProducts" class="col-6 mb-5" style="width: 50%; min-height: 240px; padding-right: 8px; padding-left: 8px;">
             <router-link :to="{name: 'ProductDetails', params: { id: product.id }}" class="nav-item nav-link">
             <a href="javascript:void(0)" style="color: black;">
               <div :style="{'background': 'url(' + product.media[0].path + ') center center / contain no-repeat', 'background-size': '100px', 'border-radius': '7px', 'width': '100%', 'display': 'block', 'cursor': 'pointer', 'min-height': '240px', 'position': 'relative'}">
@@ -115,12 +146,21 @@ export default {
       selectedVariants: '',
       instruction: '',
       quantity: '',
+      search: '',
     }
   },
   created() {},
   mounted() {
     this.$parent.loading = true
     this.getProducts()
+  },
+  computed:{
+    filteredProducts:function(){
+      var self=this;
+      return self.products.filter(function(val){
+        return val.name.toLowerCase().includes(self.search.toLowerCase());
+      })
+    }
   },
   methods: {
     getProducts() {

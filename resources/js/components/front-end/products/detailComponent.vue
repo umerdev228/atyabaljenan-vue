@@ -43,7 +43,7 @@
         </p>
         <div class="mt-3 float-right " style="width: 150px; height: 30px;">
           <span class="float-right mr-4" style="color: green; direction: ltr; white-space: nowrap;">
-            {{ product.price }}
+            {{ price }}
           </span>
         </div>
       </div>
@@ -150,6 +150,7 @@ export default {
   name: "detailComponent",
   data() {
     return {
+      price: 0.00,
       quantity: 1,
       c1Setting: {
         arrows: false,
@@ -243,10 +244,10 @@ export default {
         .then(response => {
           if (response.data.type === 'success') {
             self.product = response.data.product
+            self.price = response.data.product.price
             self.result = true
-            console.log(self.product.media.length)
-            this.$parent.loading = false
-            this.$parent.price = response.data.price
+            self.$parent.loading = false
+            self.$parent.price = response.data.price
             if(response.data.cart !== null) {
               self.quantity = response.data.cart.quantity
             }
@@ -314,6 +315,7 @@ export default {
     incrementItem() {
       if(this.product.stock > this.quantity) {
         this.quantity += 1
+        this.price = this.quantity * this.product.price
         Vue.toasted.success('Quantity Incremented Successfully');
       }
       else {
@@ -323,6 +325,7 @@ export default {
     decrementItem() {
       if (this.quantity > 1) {
         this.quantity -= 1
+        this.price = this.quantity * this.product.price
         Vue.toasted.show('Quantity decremented Successfully');
       }
     },
@@ -330,11 +333,15 @@ export default {
       let self = this
       if (self.selectedAddons.find(x => x.id === data.id)) {
         let i = self.selectedAddons.findIndex(x => x.id === data.id)
+        let v = self.selectedAddons[i]
+        self.price -= v.price
+
         self.selectedAddons.splice(i, 1);
         Vue.toasted.success('Addon Removed Successfully');
       }
       else {
         this.selectedAddons.push(data)
+        self.price += data.price
         Vue.toasted.success('Addon Added Successfully');
       }
     },
@@ -342,11 +349,18 @@ export default {
       let self = this
       if (self.selectedVariants.find(x => x.id === data.id)) {
         let i = self.selectedVariants.findIndex(x => x.id === data.id)
+
+        let v = self.selectedVariants[i]
+        self.price -= v.price
+
         self.selectedVariants.splice(i, 1);
+
+
         Vue.toasted.success('Addon Removed Successfully');
       }
       else {
         this.selectedVariants.push(data)
+        self.price += data.price
         Vue.toasted.success('Addon Added Successfully');
       }
     },
