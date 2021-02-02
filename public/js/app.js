@@ -41370,7 +41370,7 @@ var render = function() {
                 staticStyle: {
                   "background-color": "white",
                   "padding-bottom": "8px",
-                  "margin-bottom": "0px",
+                  "margin-bottom": "0",
                   height: "60px",
                   "z-index": "4"
                 }
@@ -41388,7 +41388,12 @@ var render = function() {
                       "text-transform": "none",
                       background: _vm.$parent.settings.button_color
                     },
-                    attrs: { tabindex: "0", type: "button", dir: "ltr" }
+                    attrs: { tabindex: "0", type: "button", dir: "ltr" },
+                    on: {
+                      click: function($event) {
+                        return _vm.$router.push("/order-review")
+                      }
+                    }
                   },
                   [
                     _c("span", { staticClass: "MuiButton-label" }, [
