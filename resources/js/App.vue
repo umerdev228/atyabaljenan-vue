@@ -44,7 +44,7 @@
 <!--                <span class="MuiTouchRipple-root"></span>-->
 <!--              </button>-->
             </div>
-            <div class="changeToFixedBackground m-0 p-0" :style="{'height': '100%', 'width': '100%', 'background': 'url(/'+settings.background+') center center / cover no-repeat', 'position': 'absolute'}"></div>
+            <div v-on:click="$router.push('/order-review')" class="changeToFixedBackground m-0 p-0" :style="{'height': '100%', 'width': '100%', 'background': 'url(/'+settings.background+') center center / cover no-repeat', 'position': 'absolute'}"></div>
           </div>
           </div>
         </div>

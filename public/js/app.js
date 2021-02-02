@@ -40563,6 +40563,11 @@ var render = function() {
                           _vm.settings.background +
                           ") center center / cover no-repeat",
                         position: "absolute"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.$router.push("/order-review")
+                        }
                       }
                     })
                   ])
@@ -41376,11 +41381,12 @@ var render = function() {
                   {
                     staticClass:
                       "MuiButtonBase-root MuiButton-root MuiButton-contained mb-1  ml-1 mx-auto MuiButton-containedPrimary",
-                    staticStyle: {
+                    style: {
                       width: "97%",
                       height: "100%",
                       "box-shadow": "none",
-                      "text-transform": "none"
+                      "text-transform": "none",
+                      background: _vm.$parent.settings.button_color
                     },
                     attrs: { tabindex: "0", type: "button", dir: "ltr" }
                   },
@@ -44230,7 +44236,12 @@ var render = function() {
               "text-transform": "none",
               background: _vm.$parent.settings.button_color
             },
-            attrs: { tabindex: "0", type: "button", dir: "ltr" }
+            attrs: { tabindex: "0", type: "button", dir: "ltr" },
+            on: {
+              click: function($event) {
+                return _vm.$router.push("/order-review")
+              }
+            }
           },
           [
             _c("span", { staticClass: "MuiButton-label" }, [
@@ -46078,11 +46089,12 @@ var render = function() {
                   {
                     staticClass:
                       "MuiButtonBase-root MuiButton-root MuiButton-contained mb-1  ml-1 mx-auto MuiButton-containedPrimary",
-                    staticStyle: {
+                    style: {
                       width: "97%",
                       height: "100%",
                       "box-shadow": "none",
-                      "text-transform": "none"
+                      "text-transform": "none",
+                      background: _vm.$parent.settings.button_color
                     },
                     attrs: { tabindex: "0", type: "button", dir: "ltr" },
                     on: {
