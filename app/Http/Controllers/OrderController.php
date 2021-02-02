@@ -135,10 +135,10 @@ class OrderController extends Controller
             return redirect()->route('home');
         }
         else {
-//            $mid = 'mer2000032';
-//            $secret_key = '6743048';
-            $mid = 'mer20000543';
-            $secret_key = '3750331';
+            $mid = 'mer2000032';
+            $secret_key = '6743048';
+//            $mid = 'mer20000543';
+//            $secret_key = '3750331';
             $txTime = $user->id;
             $txRefNo = time();
             $amt = $booking->total + (float)$area->delivery_charges;
