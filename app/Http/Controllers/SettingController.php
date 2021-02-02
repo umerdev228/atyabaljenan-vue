@@ -25,6 +25,13 @@ class SettingController extends Controller
         $setting=Setting::first();
         return view('admin.setting.index',compact('setting'));
     }
+    public function getSetting() {
+        $setting = Setting::first();
+        return response()->json([
+            'type' => 'success',
+            'settings' => $setting,
+        ]);
+    }
     public function postSetting(Request $request){
         $setting=Setting::first();
         $logoPath='';

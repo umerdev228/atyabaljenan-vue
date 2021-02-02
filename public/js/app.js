@@ -2048,6 +2048,7 @@ __webpack_require__.r(__webpack_exports__);
     this.loading = false;
     this.getSelectedArea();
     this.getAllCart();
+    this.getSiteSetting();
   },
   data: function data() {
     return {
@@ -2055,7 +2056,8 @@ __webpack_require__.r(__webpack_exports__);
       selectedArea: null,
       loading: true,
       price: 0.00,
-      quantity: 0
+      quantity: 0,
+      settings: ''
     };
   },
   methods: {
@@ -2077,6 +2079,20 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (e) {
         _this.errors.push(e);
+      });
+    },
+    getSiteSetting: function getSiteSetting() {
+      var _this2 = this;
+
+      var self = this;
+      self.loading = true;
+      axios.get(APP_URL + '/get-site-setting').then(function (response) {
+        if (response.data.type === 'success') {
+          self.settings = response.data.settings;
+          console.log(response.data);
+        }
+      })["catch"](function (e) {
+        _this2.errors.push(e);
       });
     }
   }
@@ -40539,11 +40555,13 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", {
                       staticClass: "changeToFixedBackground m-0 p-0",
-                      staticStyle: {
+                      style: {
                         height: "100%",
                         width: "100%",
                         background:
-                          "url(/images/images/background/1603610553.png) center center / cover no-repeat",
+                          "url(/" +
+                          _vm.settings.background +
+                          ") center center / cover no-repeat",
                         position: "absolute"
                       }
                     })
@@ -43725,7 +43743,32 @@ var render = function() {
                 }
               },
               [
-                _vm._m(0),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart"
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "MuiAvatar-root MuiAvatar-rounded",
+                        staticStyle: {
+                          width: "60px",
+                          height: "60px",
+                          "margin-bottom": "9px"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "MuiAvatar-img",
+                          attrs: { src: _vm.$parent.settings.logo }
+                        })
+                      ]
+                    )
+                  ]
+                ),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -43734,8 +43777,26 @@ var render = function() {
                       "MuiListItemText-root ml-3 MuiListItemText-multiline"
                   },
                   [
-                    _vm._m(1),
-                    _vm._m(2),
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+                      },
+                      [
+                        _c(
+                          "p",
+                          {
+                            staticStyle: {
+                              "font-size": "14px",
+                              "font-weight": "bold"
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.$parent.site_name))]
+                        )
+                      ]
+                    ),
+                    _vm._m(0),
                     _c(
                       "div",
                       {
@@ -43863,7 +43924,7 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _vm._m(3)
+                        _vm._m(1)
                       ]
                     )
                   ]
@@ -44062,7 +44123,7 @@ var render = function() {
     _vm._v(" "),
     _c("span"),
     _vm._v(" "),
-    _vm._m(4),
+    _vm._m(2),
     _vm._v(" "),
     _c(
       "div",
@@ -44162,11 +44223,12 @@ var render = function() {
           {
             staticClass:
               "MuiButtonBase-root MuiButton-root MuiButton-contained mb-1  ml-1 mx-auto MuiButton-containedPrimary",
-            staticStyle: {
+            style: {
               width: "97%",
               height: "100%",
               "box-shadow": "none",
-              "text-transform": "none"
+              "text-transform": "none",
+              background: _vm.$parent.settings.button_color
             },
             attrs: { tabindex: "0", type: "button", dir: "ltr" }
           },
@@ -44221,59 +44283,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart"
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "MuiAvatar-root MuiAvatar-rounded",
-            staticStyle: {
-              width: "60px",
-              height: "60px",
-              "margin-bottom": "9px"
-            }
-          },
-          [
-            _c("img", {
-              staticClass: "MuiAvatar-img",
-              attrs: {
-                src:
-                  "https://tapcom-live.ams3.cdn.digitaloceanspaces.com/media/cache/31/7f/317fd2c69deab791235b99265df49060.jpg"
-              }
-            })
-          ]
-        )
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      {
-        staticClass:
-          "MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
-      },
-      [
-        _c(
-          "p",
-          { staticStyle: { "font-size": "14px", "font-weight": "bold" } },
-          [_vm._v("Atyabaljenan")]
-        )
-      ]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

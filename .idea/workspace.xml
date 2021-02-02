@@ -6,8 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="9b6f6392-897a-47b7-a89e-9240efa75288" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/payment/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/payment/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SettingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SettingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/front-end/home/home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/front-end/home/home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -240,7 +244,8 @@
       <workItem from="1612022775653" duration="11119000" />
       <workItem from="1612070644647" duration="32855000" />
       <workItem from="1612152270620" duration="19954000" />
-      <workItem from="1612241155627" duration="3280000" />
+      <workItem from="1612241155627" duration="3879000" />
+      <workItem from="1612285163752" duration="1509000" />
     </task>
     <servers />
   </component>

@@ -44,7 +44,7 @@
 <!--                <span class="MuiTouchRipple-root"></span>-->
 <!--              </button>-->
             </div>
-            <div class="changeToFixedBackground m-0 p-0" style="height: 100%; width: 100%; background: url(/images/images/background/1603610553.png) center center / cover no-repeat; position: absolute;"></div>
+            <div class="changeToFixedBackground m-0 p-0" :style="{'height': '100%', 'width': '100%', 'background': 'url(/'+settings.background+') center center / cover no-repeat', 'position': 'absolute'}"></div>
           </div>
           </div>
         </div>
@@ -85,6 +85,7 @@ export default {
     this.loading = false
     this.getSelectedArea()
     this.getAllCart()
+    this.getSiteSetting()
   },
   data() {
     return {
@@ -93,6 +94,7 @@ export default {
       loading: true,
       price: 0.00,
       quantity: 0,
+      settings: '',
     }
   },
   methods: {
@@ -111,6 +113,21 @@ export default {
               self.price = response.data.totalPrice
               console.log(response.data)
               self.loading = false
+            }
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+    },
+    getSiteSetting() {
+      let self = this
+      self.loading = true
+
+      axios.get(APP_URL+'/get-site-setting')
+          .then(response => {
+            if (response.data.type === 'success') {
+              self.settings = response.data.settings
+              console.log(response.data)
             }
           })
           .catch(e => {

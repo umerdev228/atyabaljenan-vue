@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Events\OrderEvent;
 use App\Order;
 use App\OrderAddon;
 use App\OrderProduct;
@@ -192,6 +193,10 @@ class CartController extends Controller
                 }
             }
         }
+        $order_message = "A new order with an id:  $order->id has been placed.";
+
+        event(new OrderEvent($order->id, $order_message));
+
         return response()->json([
             'order_id' => $order->id,
             'type' => 'success'

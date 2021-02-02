@@ -5,12 +5,12 @@
         <div class="MuiButtonBase-root MuiListItem-root pt-1 MuiListItem-button MuiListItem-alignItemsFlexStart" tabindex="0" role="button" aria-disabled="false" style="margin-left: 0px; padding-right: 0px; padding-left: 15px; padding-bottom: 4px;">
           <div class="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart">
             <div class="MuiAvatar-root MuiAvatar-rounded" style="width: 60px; height: 60px; margin-bottom: 9px;">
-              <img src="https://tapcom-live.ams3.cdn.digitaloceanspaces.com/media/cache/31/7f/317fd2c69deab791235b99265df49060.jpg" class="MuiAvatar-img">
+              <img :src="$parent.settings.logo" class="MuiAvatar-img">
             </div>
           </div>
           <div class="MuiListItemText-root ml-3 MuiListItemText-multiline">
             <span class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock">
-              <p style="font-size: 14px; font-weight: bold;">Atyabaljenan</p>
+              <p style="font-size: 14px; font-weight: bold;">{{ $parent.site_name }}</p>
             </span><p class="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock">
             <span class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextPrimary" style="font-size: 0.9rem; color: rgb(95, 95, 95);">
 <!--              "The Art of Nature"-->
@@ -101,7 +101,7 @@
     <div class="free-space-115"></div>
     <div class="free-space-50"></div>
     <div class="action-button-english" style="background-color: white; padding-bottom: 8px; margin-bottom: 0px; height: 60px; z-index: 4;">
-      <button class="MuiButtonBase-root MuiButton-root MuiButton-contained mb-1  ml-1 mx-auto MuiButton-containedPrimary" tabindex="0" type="button" dir="ltr" style="width: 97%; height: 100%; box-shadow: none; text-transform: none;">
+      <button class="MuiButtonBase-root MuiButton-root MuiButton-contained mb-1  ml-1 mx-auto MuiButton-containedPrimary" tabindex="0" type="button" dir="ltr" :style="{'width': '97%', 'height': '100%', 'box-shadow': 'none', 'text-transform': 'none', 'background': $parent.settings.button_color}">
         <span class="MuiButton-label">
           <span class="px-1" style="position: absolute; left: 10px; top: 6px; line-height: 34px; background: rgba(0, 0, 0, 0.3); border-radius: 7px; min-width: 32px; height: 32px; font-size: 1rem;">{{ $parent.quantity }}</span>
           <span style="font-size: 1rem;">Review Order</span>

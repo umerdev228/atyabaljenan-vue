@@ -198,3 +198,6 @@ Route::get('get-all-cart', 'CartController@getAllCart')->name('get.all.cart');
 Route::post('remove-cart', 'CartController@remove')->name('remove.cart');
 Route::post('createOrder', 'CartController@createOrder')->name('create.order');
 Route::get('/payment', 'OrderController@checkout');
+
+
+Route::get('get-site-setting', 'SettingController@getSetting');
