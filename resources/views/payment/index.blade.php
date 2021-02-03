@@ -22,7 +22,7 @@
     <input type="hidden" class="form-control" value="{{ $crossCat }}" id="crossCat" name="crossCat" />
     <input type="hidden" class="form-control" id="surl" name="surl" value="{{ $surl }}" />
     <input type="hidden" class="form-control" id="furl" name="furl" value="{{ $furl }}" />
-    <input type="hidden" class="form-control" id="paymentoptions" value="{{ $booking->payment_gateway }}" name="paymentoptions"  />
+    <input type="hidden" class="form-control" id="paymentoptions" value="{{ $booking->payment_type }}" name="paymentoptions"  />
     <input type="hidden" class="form-control" id="hashMac" name="hashMac" value="{{ $sig }}" />
     <input type="hidden" value="Try Ryda" name="merchantName" />
 </form>

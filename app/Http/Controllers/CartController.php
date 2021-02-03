@@ -143,6 +143,7 @@ class CartController extends Controller
 
 
     public function createOrder(Request $request) {
+
         $trxid = time();
         $totalPrice = Cart::getTotal();
         $customer = Customer::where('phone', $request['mobile'])->first();
@@ -166,6 +167,7 @@ class CartController extends Controller
             'street' => $request['street'],
             'building' => $request['building'],
             'note' => $request['additional'],
+            'payment_type' => $request['payment_type'],
         ]);
 
         foreach (Cart::getContent() as $content) {

@@ -129,16 +129,23 @@ class OrderController extends Controller
         $details['body'] = "Your appointment has been booked";
         $details['time'] = $booking->time;
         $details['date'] = $booking->date;
-        $details['payment_gateway'] = $booking->payment_gateway;
+        $details['payment_gateway'] = $booking->payment_type;
+
 
         if ($booking->payment_gateway == 'cash') {
             return redirect()->route('home');
         }
         else {
-            $mid = 'mer20000719';
-            $secret_key = '2934100';
+//            $mid = 'mer2000032';
+//            $secret_key = '6743048';
+
 //            $mid = 'mer20000543';
 //            $secret_key = '3750331';
+
+            $mid = 'mer20000719';
+            $secret_key = '2934100';
+
+
             $txTime = $user->id;
             $txRefNo = time();
             $amt = $booking->total + (float)$area->delivery_charges;
