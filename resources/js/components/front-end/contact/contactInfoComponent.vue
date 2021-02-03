@@ -172,8 +172,8 @@
                 <input v-on:click="paymentType('knet')" id="knet" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
                 <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" for="credit">CREDIT CARD</label>
                 <input v-on:click="paymentType('credit')" id="credit" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
-                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" for="bookey">BOOKEY</label>
-                <input v-on:click="paymentType('bookey')" id="bookey" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
+                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" for="Bookeey">Bookeey</label>
+                <input v-on:click="paymentType('Bookeey')" id="Bookeey" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
               </div>
 
 

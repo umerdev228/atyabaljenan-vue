@@ -14,6 +14,8 @@
 </style>
 <body>
 
+
+
 <form method="post" id="bookeeyPaymentForm" autocomplete="off">
     <input type="hidden" class="form-control" id="mid" name="mid" value="{{ $mid }}"/>
     <input type="hidden" class="form-control" id="txnRefNo" name="txnRefNo" value="{{ $txRefNo }}" maxlength="15" />

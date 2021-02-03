@@ -283,8 +283,10 @@
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 product-footer">
 
             <div class="footer-title powered_by_message">
-              Powered By                                <a target="_blank" class="tryrydalink" href="https://www.instagram.com/tryryda/">
-              Try Ryda                                </a>
+              Powered By
+              <a target="_blank" class="tryrydalink" href="https://www.instagram.com/tryryda/">
+              Try Ryda
+              </a>
             </div>
 
           </div>

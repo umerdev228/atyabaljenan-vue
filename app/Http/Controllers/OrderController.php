@@ -142,8 +142,8 @@ class OrderController extends Controller
 //            $mid = 'mer20000543';
 //            $secret_key = '3750331';
 
-            $mid = 'mer20000719';
-            $secret_key = '2934100';
+            $mid = 'mer20000634';
+            $secret_key = '6631806';
 
 
             $txTime = $user->id;

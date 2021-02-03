@@ -3071,6 +3071,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "deliveryAddressComponent"
 });
@@ -42540,21 +42542,21 @@ var render = function() {
                           {
                             staticClass:
                               "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
-                            attrs: { for: "bookey" }
+                            attrs: { for: "Bookeey" }
                           },
-                          [_vm._v("BOOKEY")]
+                          [_vm._v("Bookeey")]
                         ),
                         _vm._v(" "),
                         _c("input", {
                           staticClass: "MuiInputBase-input MuiInput-input",
                           attrs: {
-                            id: "bookey",
+                            id: "Bookeey",
                             name: "payment_type",
                             type: "radio"
                           },
                           on: {
                             click: function($event) {
-                              return _vm.paymentType("bookey")
+                              return _vm.paymentType("Bookeey")
                             }
                           }
                         })
@@ -44164,7 +44166,7 @@ var staticRenderFns = [
       },
       [
         _c("div", { staticClass: "footer-title powered_by_message" }, [
-          _vm._v("\n            Powered By                                "),
+          _vm._v("\n            Powered By\n            "),
           _c(
             "a",
             {
@@ -44174,7 +44176,7 @@ var staticRenderFns = [
                 href: "https://www.instagram.com/tryryda/"
               }
             },
-            [_vm._v("\n            Try Ryda                                ")]
+            [_vm._v("\n            Try Ryda\n            ")]
           )
         ])
       ]
