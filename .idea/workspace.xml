@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9b6f6392-897a-47b7-a89e-9240efa75288" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/front-end/categories/detailComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/front-end/categories/detailComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/front-end/contact/contactInfoComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/front-end/contact/contactInfoComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/front-end/order/reviewOrderComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/front-end/order/reviewOrderComponent.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,7 +186,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../letbid" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../atyabaljenan-com" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -242,6 +245,7 @@
       <workItem from="1612152270620" duration="19954000" />
       <workItem from="1612241155627" duration="3879000" />
       <workItem from="1612285163752" duration="3796000" />
+      <workItem from="1612326870199" duration="7504000" />
     </task>
     <servers />
   </component>

@@ -2,7 +2,7 @@
   <div class="col-lg-12 col-md-12 col-12 p-0 w-100 " style="overflow: hidden scroll; background-color: rgb(244, 245, 245); min-height: calc(100% - 60px); height: calc(100% - 60px);">
     <div class="p-0 h-100">
       <div class="  w-100 mx-0 " style="background-color: white; height: 769px; min-height: 690px;">
-        <div class="border-bottom  w-100 detail_header" style="top: 0px; background-image: none; background-color: white; z-index: 1000;">
+        <div class="border-bottom  w-45 detail_header" style="top: 0px; background-image: none; background-color: white; z-index: 1000;">
           <button v-on:click="$router.go(-1)" class="MuiButtonBase-root MuiButton-root MuiButton-text back_arrow mt-1" tabindex="0" type="button" style="float: left; height: 50px; max-width: 30px; margin-left: 10px; margin-right: 0px; display: inline-block; z-index: 22;">
             <span class="MuiButton-label">
               <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
@@ -77,33 +77,112 @@
                 />
               </div>
 
-              <div class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth">
-                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="address" id="standard-basic-label" dir="ltr">
-                  Address
-                </label>
-                <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl" dir="ltr">
-                  <input aria-invalid="false" id="address" name="address" v-model="address" type="text" class="MuiInputBase-input MuiInput-input" value="">
+
+              <div class="w-100 mr-3" style="margin-left: 0px;">
+                <div class="row align-items-end mx-auto" dir="ltr" style="margin-top: 20px; width: 95%;">
+                  <div class="col-6 mb-3">
+                    <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated" id="demo-simple-select-label" style="text-align: left; display: inline-block; min-width: 153px; width: 100%;">
+                      Country
+                    </label>
+                    <div class="MuiInputBase-root MuiInput-root MuiInput-underline" dir="ltr" style="width: 100%;">
+                      <div class="MuiSelect-root pr-5 MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input" tabindex="0" role="button" aria-haspopup="listbox" aria-labelledby="demo-simple-select-label demo-simple-select" id="demo-simple-select"><span>
+                        <img src="https://tapcom-live.ams3.cdn.digitaloceanspaces.com/media/flags/Kuwait/kuwait_flag.png" width="20" height="20" class="mx-2">
+                      </span>Kuwait</div>
+                      <input name="country" aria-hidden="true" tabindex="-1" class="MuiSelect-nativeInput" value="24">
+                      <svg class="MuiSvgIcon-root MuiSelect-icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 10l5 5 5-5z"></path>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div class="col-6 my-3">
+                    <div class="MuiFormControl-root MuiTextField-root" style="width: 100%;">
+                      <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="blockTextField" id="blockTextField-label" dir="ltr">
+                        Block
+                      </label>
+                      <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl" dir="ltr">
+                        <input aria-invalid="false" id="blockTextField" name="block" v-model="block" type="text" class="MuiInputBase-input MuiInput-input" value="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6 my-3">
+                    <div class="MuiFormControl-root MuiTextField-root" style="width: 100%;">
+                      <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="streetTextField" id="streetTextField-label" dir="ltr">
+                        Street
+                      </label>
+                      <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl" dir="ltr">
+                        <input aria-invalid="false" id="streetTextField" name="street" v-model="street" type="text" class="MuiInputBase-input MuiInput-input" value=""></div>
+                    </div>
+                  </div>
+                  <div class="col-6 my-3">
+                    <div class="MuiFormControl-root MuiTextField-root" style="width: 100%;">
+                      <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="houseNumTextField" id="houseNumTextField-label" dir="ltr">
+                        House #
+                      </label>
+                      <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl" dir="ltr">
+                        <input aria-invalid="false" id="houseNumTextField" name="building" v-model="building" type="text" class="MuiInputBase-input MuiInput-input" value=""></div>
+                    </div>
+                  </div>
+                  <div class="col-6 my-3">
+                    <div class="MuiFormControl-root MuiTextField-root" style="width: 100%;">
+                      <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="avenueTextField" id="avenueTextField-label" dir="ltr">Avenue</label><div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl" dir="ltr">
+                      <input aria-invalid="false" id="avenueTextField" name="avenue" v-model="avenue" type="text" class="MuiInputBase-input MuiInput-input" value=""></div>
+                    </div>
+                  </div>
+                  <div class="col-12 mt-3">
+                    <div class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth">
+                      <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="additionalTextField" id="additionalTextField-label" dir="ltr">Additional info</label>
+                      <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl" dir="ltr">
+                        <input aria-invalid="false" id="additionalTextField" name="additional" v-model="additional" type="text" class="MuiInputBase-input MuiInput-input" value="">
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
+
+<!--              <div class="col-12 mb-3">-->
+              <!--                <div class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon" role="combobox" aria-expanded="false" name="area">-->
+              <!--                  <div class="MuiFormControl-root MuiTextField-root" style="width: 100%;">-->
+              <!--                    <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="areas" id="areas-label" dir="ltr">-->
+              <!--                      Area-->
+              <!--                    </label>-->
+              <!--                    <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiAutocomplete-inputRoot MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd">-->
+              <!--                      <input aria-invalid="false" autocomplete="off" id="areas" type="text" class="MuiInputBase-input MuiInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd" aria-autocomplete="list" autocapitalize="none" spellcheck="false" value="">-->
+              <!--                      <select name="area" id="area">-->
+              <!--                        <option value="0">Choose Area</option>-->
+              <!--                      </select>-->
+              <!--                    </div>-->
+              <!--                  </div>-->
+              <!--                </div>-->
+              <!--              </div>-->
+<!--              <div class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth">-->
+<!--                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="address" id="standard-basic-label" dir="ltr">-->
+<!--                  Address-->
+<!--                </label>-->
+<!--                <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl" dir="ltr">-->
+<!--                  <input aria-invalid="false" id="address" name="address" v-model="address" type="text" class="MuiInputBase-input MuiInput-input" value="">-->
+<!--                </div>-->
+<!--              </div>-->
+
               <div class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth" style="margin-bottom: 100px;">
                 <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" for="cash">Cash</label>
-                  <input v-on:click="paymentType('cash')" id="cash" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
+                <input v-on:click="paymentType('cash')" id="cash" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
                 <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" for="knet">K-NET</label>
-                  <input v-on:click="paymentType('knet')" id="knet" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
+                <input v-on:click="paymentType('knet')" id="knet" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
                 <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" for="credit">CREDIT CARD</label>
-                  <input v-on:click="paymentType('credit')" id="credit" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
+                <input v-on:click="paymentType('credit')" id="credit" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
                 <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" for="bookey">BOOKEY</label>
-                  <input v-on:click="paymentType('bookey')" id="bookey" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
+                <input v-on:click="paymentType('bookey')" id="bookey" name="payment_type" type="radio" class="MuiInputBase-input MuiInput-input">
               </div>
 
 
               <div class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth">
-<!--                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="address" id="standard-basic-label" dir="ltr">-->
-<!--                  Address-->
-<!--                </label>-->
+                <!--                <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated" data-shrink="false" for="address" id="standard-basic-label" dir="ltr">-->
+                <!--                  Address-->
+                <!--                </label>-->
                 <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl" dir="ltr">
-<!--                  <input aria-invalid="false" id="address" name="address" v-model="address" type="text" class="MuiInputBase-input MuiInput-input" value="">-->
+                  <!--                  <input aria-invalid="false" id="address" name="address" v-model="address" type="text" class="MuiInputBase-input MuiInput-input" value="">-->
                 </div>
               </div>
 
@@ -135,7 +214,12 @@ export default {
       email: '',
       address: '',
       payment_type: '',
-      result: null
+      result: null,
+      block: '',
+      street: '',
+      building: '',
+      avenue: '',
+      additional: '',
     }
   },
   created() {
@@ -150,7 +234,18 @@ export default {
       let email = this.email
       let payment_type = this.payment_type
 
+      let block = this.block
+      let street = this.street
+      let building = this.building
+      let avenue = this.avenue
+      let additional = this.additional
+
       axios.post(APP_URL+'/createOrder', {
+        'block': block,
+        'street': street,
+        'building': building,
+        'avenue': avenue,
+        'additional': additional,
         'name': name,
         'phone': phone,
         'email': email,

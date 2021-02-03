@@ -143,7 +143,6 @@ class CartController extends Controller
 
 
     public function createOrder(Request $request) {
-        
         $trxid = time();
         $totalPrice = Cart::getTotal();
         $customer = Customer::where('phone', $request['mobile'])->first();
@@ -162,6 +161,11 @@ class CartController extends Controller
             'delivery_charges' => $request['area']['delivery_charges'],
             'total' => $totalPrice,
             'trx_id' => $trxid,
+            'block' => $request['block'],
+            'avanue' => $request['avenue'],
+            'street' => $request['street'],
+            'building' => $request['building'],
+            'note' => $request['additional'],
         ]);
 
         foreach (Cart::getContent() as $content) {

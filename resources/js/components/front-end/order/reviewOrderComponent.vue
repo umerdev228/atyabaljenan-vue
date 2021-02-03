@@ -51,7 +51,7 @@
               </div>
               <div class="MuiGrid-root text-left MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-6 MuiGrid-grid-md-7 MuiGrid-grid-lg-8" style="font-weight: 300;">
                 <span style="font-weight: 600;">
-                  {{ product.name }} {{product.attributes.addons.length}}
+                  {{ product.name }}
                 </span>
                 <div class="p-2">
                 <div v-if="product.attributes.addons.length > 0" v-for="addon in product.attributes.addons" class="ml-2">

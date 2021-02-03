@@ -2568,6 +2568,85 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "contactInfoComponent",
   data: function data() {
@@ -2577,7 +2656,12 @@ __webpack_require__.r(__webpack_exports__);
       email: '',
       address: '',
       payment_type: '',
-      result: null
+      result: null,
+      block: '',
+      street: '',
+      building: '',
+      avenue: '',
+      additional: ''
     };
   },
   created: function created() {},
@@ -2591,7 +2675,17 @@ __webpack_require__.r(__webpack_exports__);
       var phone = this.result;
       var email = this.email;
       var payment_type = this.payment_type;
+      var block = this.block;
+      var street = this.street;
+      var building = this.building;
+      var avenue = this.avenue;
+      var additional = this.additional;
       axios.post(APP_URL + '/createOrder', {
+        'block': block,
+        'street': street,
+        'building': building,
+        'avenue': avenue,
+        'additional': additional,
         'name': name,
         'phone': phone,
         'email': email,
@@ -41540,7 +41634,7 @@ var render = function() {
             _c(
               "div",
               {
-                staticClass: "border-bottom  w-100 detail_header",
+                staticClass: "border-bottom  w-45 detail_header",
                 staticStyle: {
                   top: "0px",
                   "background-image": "none",
@@ -41942,64 +42036,420 @@ var render = function() {
                     _c(
                       "div",
                       {
-                        staticClass:
-                          "MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                        staticClass: "w-100 mr-3",
+                        staticStyle: { "margin-left": "0px" }
                       },
                       [
                         _c(
-                          "label",
-                          {
-                            staticClass:
-                              "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
-                            attrs: {
-                              "data-shrink": "false",
-                              for: "address",
-                              id: "standard-basic-label",
-                              dir: "ltr"
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                  Address\n                "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
                           "div",
                           {
-                            staticClass:
-                              "MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl",
+                            staticClass: "row align-items-end mx-auto",
+                            staticStyle: { "margin-top": "20px", width: "95%" },
                             attrs: { dir: "ltr" }
                           },
                           [
-                            _c("input", {
-                              directives: [
+                            _c("div", { staticClass: "col-6 mb-3" }, [
+                              _c(
+                                "label",
                                 {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.address,
-                                  expression: "address"
-                                }
-                              ],
-                              staticClass: "MuiInputBase-input MuiInput-input",
-                              attrs: {
-                                "aria-invalid": "false",
-                                id: "address",
-                                name: "address",
-                                type: "text",
-                                value: ""
-                              },
-                              domProps: { value: _vm.address },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.address = $event.target.value
-                                }
-                              }
-                            })
+                                  staticClass:
+                                    "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated",
+                                  staticStyle: {
+                                    "text-align": "left",
+                                    display: "inline-block",
+                                    "min-width": "153px",
+                                    width: "100%"
+                                  },
+                                  attrs: { id: "demo-simple-select-label" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                      Country\n                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "MuiInputBase-root MuiInput-root MuiInput-underline",
+                                  staticStyle: { width: "100%" },
+                                  attrs: { dir: "ltr" }
+                                },
+                                [
+                                  _vm._m(2),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "MuiSelect-nativeInput",
+                                    attrs: {
+                                      name: "country",
+                                      "aria-hidden": "true",
+                                      tabindex: "-1",
+                                      value: "24"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "svg",
+                                    {
+                                      staticClass:
+                                        "MuiSvgIcon-root MuiSelect-icon",
+                                      attrs: {
+                                        focusable: "false",
+                                        viewBox: "0 0 24 24",
+                                        "aria-hidden": "true"
+                                      }
+                                    },
+                                    [
+                                      _c("path", {
+                                        attrs: { d: "M7 10l5 5 5-5z" }
+                                      })
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-6 my-3" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "MuiFormControl-root MuiTextField-root",
+                                  staticStyle: { width: "100%" }
+                                },
+                                [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass:
+                                        "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
+                                      attrs: {
+                                        "data-shrink": "false",
+                                        for: "blockTextField",
+                                        id: "blockTextField-label",
+                                        dir: "ltr"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                        Block\n                      "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl",
+                                      attrs: { dir: "ltr" }
+                                    },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.block,
+                                            expression: "block"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "MuiInputBase-input MuiInput-input",
+                                        attrs: {
+                                          "aria-invalid": "false",
+                                          id: "blockTextField",
+                                          name: "block",
+                                          type: "text",
+                                          value: ""
+                                        },
+                                        domProps: { value: _vm.block },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.block = $event.target.value
+                                          }
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-6 my-3" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "MuiFormControl-root MuiTextField-root",
+                                  staticStyle: { width: "100%" }
+                                },
+                                [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass:
+                                        "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
+                                      attrs: {
+                                        "data-shrink": "false",
+                                        for: "streetTextField",
+                                        id: "streetTextField-label",
+                                        dir: "ltr"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                        Street\n                      "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl",
+                                      attrs: { dir: "ltr" }
+                                    },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.street,
+                                            expression: "street"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "MuiInputBase-input MuiInput-input",
+                                        attrs: {
+                                          "aria-invalid": "false",
+                                          id: "streetTextField",
+                                          name: "street",
+                                          type: "text",
+                                          value: ""
+                                        },
+                                        domProps: { value: _vm.street },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.street = $event.target.value
+                                          }
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-6 my-3" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "MuiFormControl-root MuiTextField-root",
+                                  staticStyle: { width: "100%" }
+                                },
+                                [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass:
+                                        "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
+                                      attrs: {
+                                        "data-shrink": "false",
+                                        for: "houseNumTextField",
+                                        id: "houseNumTextField-label",
+                                        dir: "ltr"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                        House #\n                      "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl",
+                                      attrs: { dir: "ltr" }
+                                    },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.building,
+                                            expression: "building"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "MuiInputBase-input MuiInput-input",
+                                        attrs: {
+                                          "aria-invalid": "false",
+                                          id: "houseNumTextField",
+                                          name: "building",
+                                          type: "text",
+                                          value: ""
+                                        },
+                                        domProps: { value: _vm.building },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.building = $event.target.value
+                                          }
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-6 my-3" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "MuiFormControl-root MuiTextField-root",
+                                  staticStyle: { width: "100%" }
+                                },
+                                [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass:
+                                        "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
+                                      attrs: {
+                                        "data-shrink": "false",
+                                        for: "avenueTextField",
+                                        id: "avenueTextField-label",
+                                        dir: "ltr"
+                                      }
+                                    },
+                                    [_vm._v("Avenue")]
+                                  ),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl",
+                                      attrs: { dir: "ltr" }
+                                    },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.avenue,
+                                            expression: "avenue"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "MuiInputBase-input MuiInput-input",
+                                        attrs: {
+                                          "aria-invalid": "false",
+                                          id: "avenueTextField",
+                                          name: "avenue",
+                                          type: "text",
+                                          value: ""
+                                        },
+                                        domProps: { value: _vm.avenue },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.avenue = $event.target.value
+                                          }
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-12 mt-3" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                                },
+                                [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass:
+                                        "MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated",
+                                      attrs: {
+                                        "data-shrink": "false",
+                                        for: "additionalTextField",
+                                        id: "additionalTextField-label",
+                                        dir: "ltr"
+                                      }
+                                    },
+                                    [_vm._v("Additional info")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl",
+                                      attrs: { dir: "ltr" }
+                                    },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.additional,
+                                            expression: "additional"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "MuiInputBase-input MuiInput-input",
+                                        attrs: {
+                                          "aria-invalid": "false",
+                                          id: "additionalTextField",
+                                          name: "additional",
+                                          type: "text",
+                                          value: ""
+                                        },
+                                        domProps: { value: _vm.additional },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.additional = $event.target.value
+                                          }
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ]
+                              )
+                            ])
                           ]
                         )
                       ]
@@ -42111,7 +42561,7 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _vm._m(2)
+                    _vm._m(3)
                   ])
                 ]),
                 _vm._v(" "),
@@ -42147,7 +42597,7 @@ var render = function() {
                         }
                       },
                       [
-                        _vm._m(3),
+                        _vm._m(4),
                         _vm._v(" "),
                         _c("span", { staticClass: "MuiTouchRipple-root" })
                       ]
@@ -42227,6 +42677,39 @@ var staticRenderFns = [
             "background-color": "rgb(209, 206, 206)"
           }
         })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "MuiSelect-root pr-5 MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input",
+        attrs: {
+          tabindex: "0",
+          role: "button",
+          "aria-haspopup": "listbox",
+          "aria-labelledby": "demo-simple-select-label demo-simple-select",
+          id: "demo-simple-select"
+        }
+      },
+      [
+        _c("span", [
+          _c("img", {
+            staticClass: "mx-2",
+            attrs: {
+              src:
+                "https://tapcom-live.ams3.cdn.digitaloceanspaces.com/media/flags/Kuwait/kuwait_flag.png",
+              width: "20",
+              height: "20"
+            }
+          })
+        ]),
+        _vm._v("Kuwait")
       ]
     )
   },
@@ -45128,8 +45611,6 @@ var render = function() {
                                   _vm._v(
                                     "\n                  " +
                                       _vm._s(product.name) +
-                                      " " +
-                                      _vm._s(product.attributes.addons.length) +
                                       "\n                "
                                   )
                                 ]
